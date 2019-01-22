@@ -145,68 +145,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-mynew" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/19/mynew/">mynew</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/19/mynew/" class="archive-article-date">
-  	<time datetime="2019-01-19T04:45:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/19/mynew/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-微信礼品卡踩坑之旅" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -235,36 +173,42 @@
 </ul>
 </blockquote>
 <p>项目来自于某公司甲方爸爸的两版需求：第一版为开通官方礼品卡小程序，旗下会员可在其他小程序中利用礼品卡为账户充值，第二版模仿星巴克用星说，开发新的礼品卡小程序。<br>本文面向具有一定经验的微信开发者，微信相关的其他功能（开发者配置、登录、支付等）不再一一赘述。<br>SDK用的是班纳睿大大的<a href="https://github.com/Wechat-Group/WxJava" target="_blank" rel="noopener">WxJava</a>，在此安利一波～</p>
-<h2 id="官方礼品卡部署"><a href="#官方礼品卡部署" class="headerlink" title="官方礼品卡部署"></a>官方礼品卡部署</h2><p>先附上官方<del>槽点满满</del>充满诚意的<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=215143440770UT7" target="_blank" rel="noopener">礼品卡文档</a>。<br>这是目前我见过最长（所有内容挤进一篇）、最乱（没有目录，排版不统一，甚至有错别字）的微信文档了。大致讲了以下几点：</p>
-<blockquote>
-<ul>
-<li>小程序演示</li>
-<li>开通条件</li>
-<li>礼品卡CRUD</li>
-<li>货架CRUD</li>
-<li>绑定支付商户</li>
-<li>代码上传</li>
-<li>订单查询</li>
-<li>事件推送</li>
-<li>使用方式</li>
-<li>退款</li>
-<li>发票</li>
-<li>外链跳转</li>
-<li><del>压根不会鸟你的</del>联系我们</li>
-</ul>
-</blockquote>
-<p>WOWEE～看起来啥都给我们api caller准备好了，接下来调就完事了咩～</p>
-<h3 id="首先注意"><a href="#首先注意" class="headerlink" title="首先注意"></a>首先注意</h3><p>1、礼品卡亦属于卡券的一个分类，建议先查阅<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=215143440770UT7" target="_blank" rel="noopener">微信卡券文档</a>以便了解相关字段与词汇的含义。<br>2、开通礼品卡的公众号门槛较高，需要开通带储值功能的礼品卡，更是要若干认证与手续，记得提前准备，个人认证的公众号无法申请礼品卡功能。<br>3、创建小程序<strong>不需要写代码</strong>，完全靠接口调用生成。</p>
-<h3 id="接入准备"><a href="#接入准备" class="headerlink" title="接入准备"></a>接入准备</h3><ul>
-<li>公众号-&gt;已认证</li>
-<li>公众号开通-&gt;卡券功能</li>
-<li>公众号开通-&gt;支付功能(微信认证)</li>
-<li>微信公众号-&gt;快速关联小程序(创建小程序账号)</li>
-<li>小程序账号-&gt;绑定 商户号(微信支付)</li>
-<li>商户号开通 微信礼品卡 (登录商户平台，产品中心-&gt;微信礼品卡，点击开通)</li>
-</ul>
-<h3 id="关于礼品卡"><a href="#关于礼品卡" class="headerlink" title="关于礼品卡"></a>关于礼品卡</h3><p>看过卡券文档的朋友们可能会发现，微信没有为各种卡券类型做一个完整的分类统计，<br><img title="cardList" alt="cardList" src="http://plppccgse.bkt.clouddn.com/static/images/cardList.jpg?imageView2/2/w/450"></p>
+<!-- more -- >
 
+## 官方礼品卡部署
+先附上官方~~槽点满满~~充满诚意的[礼品卡文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7)。
+这是目前我见过最长（所有内容挤进一篇）、最乱（没有目录，排版不统一，甚至有错别字）的微信文档了。大致讲了以下几点：
+> * 小程序演示
+> * 开通条件
+> * 礼品卡CRUD
+> * 货架CRUD
+> * 绑定支付商户
+> * 代码上传
+> * 订单查询
+> * 事件推送
+> * 使用方式
+> * 退款
+> * 发票
+> * 外链跳转
+> * ~~压根不会鸟你的~~联系我们
+
+WOWEE～看起来啥都给我们api caller准备好了，接下来调就完事了咩～
+### 首先注意
+1、礼品卡亦属于卡券的一个分类，建议先查阅[微信卡券文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7)以便了解相关字段与词汇的含义。
+2、开通礼品卡的公众号门槛较高，需要开通带储值功能的礼品卡，更是要若干认证与手续，记得提前准备，个人认证的公众号无法申请礼品卡功能。
+3、创建小程序**不需要写代码**，完全靠接口调用生成。
+### 接入准备
+* 公众号->已认证
+* 公众号开通->卡券功能
+* 公众号开通->支付功能(微信认证)
+* 微信公众号->快速关联小程序(创建小程序账号)
+* 小程序账号->绑定 商户号(微信支付)
+* 商户号开通 微信礼品卡 (登录商户平台，产品中心->微信礼品卡，点击开通)
+
+### 关于礼品卡
+看过卡券文档的朋友们可能会发现，微信没有为各种卡券类型做一个完整的分类统计，
+<img title="cardList" alt="cardList" src="http://plppccgse.bkt.clouddn.com/static/images/cardList.jpg?imageView2/2/w/450">
+-->
       
 
       
@@ -288,77 +232,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/01/19/微信礼品卡踩坑之旅/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/18/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/18/hello-world/" class="archive-article-date">
-  	<time datetime="2019-01-18T08:49:11.403Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/18/hello-world/">展开全文 >></a>
         </p>
       
 
@@ -484,10 +357,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">yilia</a>
-              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">微信</a>
