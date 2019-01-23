@@ -16,10 +16,13 @@
 <meta property="og:site_name" content="MiniMacx的妙妙屋">
 <meta property="og:description" content="文中所描述的项目截止于2018-10，因此文章内容具有一定时效性，请大家注意。本文为博主第一篇博客，不足之处还请各位巨佬们指出:D撰写这篇博客初衷有二：记录自己第一个正式项目的开发历程、为需要开通微信礼品卡/实现自定义礼品卡小程序的各位分享一些流程与思路，因此本文总体划为以下部分：   官方礼品卡部署 自定义礼品卡实现   项目来自于某公司甲方爸爸的两版需求：第一版为开通官方礼品卡小程序，旗下会员">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-22T12:02:10.132Z">
+<meta property="og:image" content="http://plppccgse.bkt.clouddn.com/static/images/membercard.jpg}?imageView2/2/w/450">
+<meta property="og:image" content="http://plppccgse.bkt.clouddn.com/static/images/old_index.jpg}<br>{%">
+<meta property="og:updated_time" content="2019-01-23T09:38:42.450Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微信礼品卡踩坑之旅">
 <meta name="twitter:description" content="文中所描述的项目截止于2018-10，因此文章内容具有一定时效性，请大家注意。本文为博主第一篇博客，不足之处还请各位巨佬们指出:D撰写这篇博客初衷有二：记录自己第一个正式项目的开发历程、为需要开通微信礼品卡/实现自定义礼品卡小程序的各位分享一些流程与思路，因此本文总体划为以下部分：   官方礼品卡部署 自定义礼品卡实现   项目来自于某公司甲方爸爸的两版需求：第一版为开通官方礼品卡小程序，旗下会员">
+<meta name="twitter:image" content="http://plppccgse.bkt.clouddn.com/static/images/membercard.jpg}?imageView2/2/w/450">
   
     <link rel="alternative" href="/atom.xml" title="MiniMacx的妙妙屋" type="application/atom+xml">
   
@@ -174,43 +177,45 @@
 <li>自定义礼品卡实现</li>
 </ul>
 </blockquote>
-<p>项目来自于某公司甲方爸爸的两版需求：第一版为开通官方礼品卡小程序，旗下会员可在其他小程序中利用礼品卡为账户充值，第二版模仿星巴克用星说，开发新的礼品卡小程序。<br>本文面向具有一定经验的微信开发者，微信相关的其他功能（开发者配置、登录、支付等）不再一一赘述。<br>SDK用的是班纳睿大大的<a href="https://github.com/Wechat-Group/WxJava" target="_blank" rel="noopener">WxJava</a>，在此安利一波～</p>
-<!-- more -- >
-
-## 官方礼品卡部署
-先附上官方~~槽点满满~~充满诚意的[礼品卡文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7)。
-这是目前我见过最长（所有内容挤进一篇）、最乱（没有目录，排版不统一，甚至有错别字）的微信文档了。大致讲了以下几点：
-> * 小程序演示
-> * 开通条件
-> * 礼品卡CRUD
-> * 货架CRUD
-> * 绑定支付商户
-> * 代码上传
-> * 订单查询
-> * 事件推送
-> * 使用方式
-> * 退款
-> * 发票
-> * 外链跳转
-> * ~~压根不会鸟你的~~联系我们
-
-WOWEE～看起来啥都给我们api caller准备好了，接下来调就完事了咩～
-### 首先注意
-1、礼品卡亦属于卡券的一个分类，建议先查阅[微信卡券文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7)以便了解相关字段与词汇的含义。
-2、开通礼品卡的公众号门槛较高，需要开通带储值功能的礼品卡，更是要若干认证与手续，记得提前准备，个人认证的公众号无法申请礼品卡功能。
-3、创建小程序**不需要写代码**，完全靠接口调用生成。
-### 接入准备
-* 公众号->已认证
-* 公众号开通->卡券功能
-* 公众号开通->支付功能(微信认证)
-* 微信公众号->快速关联小程序(创建小程序账号)
-* 小程序账号->绑定 商户号(微信支付)
-* 商户号开通 微信礼品卡 (登录商户平台，产品中心->微信礼品卡，点击开通)
-
-### 关于礼品卡
-看过卡券文档的朋友们可能会发现，微信没有为各种卡券类型做一个完整的分类统计，
-<img title="cardList" alt="cardList" src="http://plppccgse.bkt.clouddn.com/static/images/cardList.jpg?imageView2/2/w/450">
--->
+<p>项目来自于某公司甲方爸爸的两版需求：第一版为开通官方礼品卡小程序，旗下会员可在其他小程序中利用礼品卡为账户充值，第二版模仿星巴克用星说，开发新的礼品卡小程序。<br>本文面向具有一定经验的微信开发者，微信相关的其他功能（开发者配置、登录、支付等）不再一一赘述。<br>SDK用的是班纳睿大大的<a href="https://github.com/Wechat-Group/WxJava" target="_blank" rel="noopener">WxJava</a>，在此安利一波～<br><a id="more"></a></p>
+<h2 id="官方礼品卡部署"><a href="#官方礼品卡部署" class="headerlink" title="官方礼品卡部署"></a>官方礼品卡部署</h2><p>先附上官方<del>槽点满满</del>充满诚意的<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=215143440770UT7" target="_blank" rel="noopener">礼品卡文档</a>。<br>这是目前我见过最长（所有内容挤进一篇）、最乱（没有目录，排版不统一，甚至有错别字）的微信文档了。大致讲了以下几点：</p>
+<blockquote>
+<ul>
+<li>小程序演示</li>
+<li>开通条件</li>
+<li>礼品卡CRUD</li>
+<li>货架CRUD</li>
+<li>绑定支付商户</li>
+<li>代码上传</li>
+<li>订单查询</li>
+<li>事件推送</li>
+<li>使用方式</li>
+<li>退款</li>
+<li>发票</li>
+<li>外链跳转</li>
+<li><del>压根不会鸟你的</del>联系我们</li>
+</ul>
+</blockquote>
+<p>WOWEE～看起来啥都给我们api caller准备好了，接下来调就完事了咩～LET’s GO DUDE!</p>
+<h3 id="首先注意"><a href="#首先注意" class="headerlink" title="首先注意"></a>首先注意</h3><p>1、礼品卡亦属于卡券的一个分类，建议先查阅<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=215143440770UT7" target="_blank" rel="noopener">微信卡券文档</a>以便了解相关字段与词汇的含义。<br>2、开通礼品卡的公众号门槛较高，若需开通带储值功能的礼品卡，更是要若干认证与手续，记得提前准备，个人认证的公众号无法申请礼品卡功能。<br>3、创建小程序<strong>不需要写代码</strong>，完全靠接口调用生成。</p>
+<h3 id="接入准备"><a href="#接入准备" class="headerlink" title="接入准备"></a>接入准备</h3><ul>
+<li>公众号-&gt;已认证</li>
+<li>公众号开通-&gt;卡券功能</li>
+<li>公众号开通-&gt;支付功能(微信认证)</li>
+<li>微信公众号-&gt;快速关联小程序(创建小程序账号)</li>
+<li>小程序账号-&gt;绑定 商户号(微信支付)</li>
+</ul>
+<h3 id="礼品卡创建"><a href="#礼品卡创建" class="headerlink" title="礼品卡创建"></a>礼品卡创建</h3><p>看过卡券文档的朋友们可能会发现，微信没有为卡券类型做一个完整的分类统计，在这里我可以说，<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1451025283" target="_blank" rel="noopener">会员卡</a>和礼品卡是目前<strong>唯二</strong>可以放入卡包的，其余皆为票券，这也为后续的自定义礼品卡实现提供了思路。</p>
+<ul>
+<li>礼品卡的文档中没有对每个字段代表的内容做详细的图解，不过我们可以参照会员卡逐一对照：<img title="cardList" alt="cardList" src="http://plppccgse.bkt.clouddn.com/static/images/membercard.jpg}?imageView2/2/w/450">
+</li>
+</ul>
+<h3 id="货架创建"><a href="#货架创建" class="headerlink" title="货架创建"></a>货架创建</h3><p>礼品卡的载体，可生成多个，但只能上线其中一个，广告底下每行标题对应<code>category_list</code>中的元素，底下的每一小块代表<code>theme_list</code>中的一个元素，将创建完成的礼品卡放入<code>theme_list</code>的<code>item_list</code>字段中，其余字段可自调，创建成功后返回<code>page_id</code>需要保存，后续会用到。<br>货架包含的字段较多，文档中有详细的解释，这里就不展开了，特别注意创建货架的接口每天有调用次数限制，约为<strong>10次/天</strong>，调用前建议校验json格式，检查一遍各字段的长度限制。 </p>
+<h3 id="开通支付"><a href="#开通支付" class="headerlink" title="开通支付"></a>开通支付</h3><ol>
+<li>调文档8.1中的接口，带上你公众号的商户号即可，调用成功后访问返回结果中的Url，登录商户平台，产品中心-&gt;微信礼品卡，点击开通。</li>
+<li>8.2接口，带上小程序appid与商户号，成功即开通完成。</li>
+</ol>
+<h3 id="上传生成代码"><a href="#上传生成代码" class="headerlink" title="上传生成代码"></a><del>上传</del>生成代码</h3><p>调用8.3接口，带上对应的<code>appid</code>+<code>page_id</code>，等待片刻后即可在小程序后台看到体验版，扫码进去后看到的约莫是这样子：<br><img src="http://plppccgse.bkt.clouddn.com/static/images/old_index.jpg}<br>{%"></p>
       
 
       
@@ -333,7 +338,7 @@ WOWEE～看起来啥都给我们api caller准备好了，接下来调就完事�
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#官方礼品卡部署"><span class="toc-number">1.</span> <span class="toc-text">官方礼品卡部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#首先注意"><span class="toc-number">1.1.</span> <span class="toc-text">首先注意</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接入准备"><span class="toc-number">1.2.</span> <span class="toc-text">接入准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#礼品卡创建"><span class="toc-number">1.3.</span> <span class="toc-text">礼品卡创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#货架创建"><span class="toc-number">1.4.</span> <span class="toc-text">货架创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开通支付"><span class="toc-number">1.5.</span> <span class="toc-text">开通支付</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上传生成代码"><span class="toc-number">1.6.</span> <span class="toc-text">上传生成代码</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
