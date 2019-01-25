@@ -21,7 +21,7 @@
 <meta property="og:image" content="http://plppccgse.bkt.clouddn.com/static/images/wulian.jpeg">
 <meta property="og:image" content="http://plppccgse.bkt.clouddn.com/static/images/xbk.jpg?imageView2/2/w/350">
 <meta property="og:image" content="http://plppccgse.bkt.clouddn.com/static/images/xbk_index.jpg?imageView2/2/w/350">
-<meta property="og:updated_time" content="2019-01-23T13:37:52.985Z">
+<meta property="og:updated_time" content="2019-01-25T15:41:50.739Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微信礼品卡踩坑之旅">
 <meta name="twitter:description" content="文中所描述的项目截止于2018-10，因此文章内容具有一定时效性，请大家注意。本文为博主第一篇博客，不足之处还请各位巨佬们指出:D撰写这篇博客初衷有二：记录自己第一个正式项目的开发历程、为需要开通微信礼品卡/实现自定义礼品卡小程序的各位分享一些流程与思路，因此本文总体划为以下部分：   官方礼品卡部署 自定义小程序实现   项目来自于某公司甲方爸爸的两版需求：第一版为开通官方礼品卡小程序，旗下会员">
@@ -224,42 +224,55 @@
 <hr>
 <img src="http://plppccgse.bkt.clouddn.com/static/images/wulian.jpeg">
 <p>emmm…..<br>基本功能算是都有了，只是这样式…啧啧</p>
-<h3 id="退款问题"><a href="#退款问题" class="headerlink" title="退款问题"></a>退款问题</h3><blockquote>
-<p>首先国家法律规定，<strong>必须有退款功能</strong>。所以要做，要是礼品卡过期了、失效了，这也是能退款的，除非你设置了长期有效(不要小看，要相信你的用户是个大牛叉)</p>
-</blockquote>
+<h3 id="退款问题"><a href="#退款问题" class="headerlink" title="退款问题"></a>退款问题</h3><p> 首先国家法律规定，<strong>必须有退款功能</strong>。所以要做，要是礼品卡过期了、失效了，这也是能退款的，除非你设置了长期有效(不要小看，要相信你的用户是个大牛叉)</p>
 <h3 id="优缺点小结"><a href="#优缺点小结" class="headerlink" title="优缺点小结"></a>优缺点小结</h3><blockquote>
 <ul>
-<li>官方支持，创建过程轻松+愉快。功能完整，扩展字段多，特殊业务大可加进其中</li>
-<li>样式普通，布局简陋，甚至说难看也不为过，颜值全靠图片衬托</li>
+<li>官方支持，从创建到部署轻松+愉快。可选字段多，扩展业务很方便。有独特的送卡消息，支持扫码消费或者线下核销。</li>
+<li>样式普通，布局简陋，颜值全靠图片衬托。</li>
 </ul>
 </blockquote>
-<h1 id="自定义小程序实现"><a href="#自定义小程序实现" class="headerlink" title="自定义小程序实现"></a>自定义小程序实现</h1><p>一旦涉及微信礼品卡，相信大家必然知道<strong>星巴克用星说</strong>这玩意，先看看啥叫别人家的小程序：<br><img src="http://plppccgse.bkt.clouddn.com/static/images/xbk.jpg?imageView2/2/w/350"></p>
+<h1 id="自定义小程序实现"><a href="#自定义小程序实现" class="headerlink" title="自定义小程序实现"></a>自定义小程序实现</h1><blockquote>
+<ul>
+<li>尽管官方的礼品卡小程序不是很美观，但其他方面还是可以接受的。若要是需求方提到了<strong>星巴克用星说</strong>这玩意并且要给他个差不多样子的，那你就麻烦了。接下来你可能会一阵懵逼，陷入江局——它啥都跟官方的礼品卡小程序一样，但<del>他娘的</del>界面还比你好看，甚至还会有”之前太丑肯定是字段调得不对”的错觉，咱们先看看啥叫别人家的小程序：</li>
+</ul>
+</blockquote>
+<img src="http://plppccgse.bkt.clouddn.com/static/images/xbk.jpg?imageView2/2/w/350">
 <hr>
 <img src="http://plppccgse.bkt.clouddn.com/static/images/xbk_index.jpg?imageView2/2/w/350">
 <hr>
 <blockquote>
-<p>用星说是微信团队为星巴克定制的礼品卡小程序，也是自它出现以后，官方才开放了礼品卡的相关文档。</p>
+<ul>
+<li>星巴克用星说是微信团队特别定制的礼品卡小程序，也是自它出现以后，官方才开放了礼品卡的相关文档，可以说是其他礼品卡小程序的始祖。</li>
+</ul>
 </blockquote>
-<p>在体验完小程序的所有流程后，总结出了用星说之于其他礼品卡小程序所拥有的闪光点：</p>
+<p>概括了一下用星说之于其他礼品卡小程序所没有的features：</p>
 <blockquote>
 <ul>
 <li>带阴影的块状元素，看起来更加优雅</li>
-<li>轮播图广告</li>
+<li>支持gif的轮播图广告</li>
 <li>星巴克风格的icon</li>
-<li>购买界面焕然一新</li>
+<li>全新的购买界面</li>
+<li>节日期间首页会有活动弹窗</li>
 </ul>
 </blockquote>
-<p>本节自定义小程序的目标是<strong>模仿星巴克用星说</strong>，并在此基础上增加额外的甲方需求，包括：单品购买，门店导引，抢红包模式，个人卡券记录。</p>
-<h3 id="开始之前"><a href="#开始之前" class="headerlink" title="开始之前"></a>开始之前</h3><p>经过不停的搜索与咨询（的确有自行实现的公司，然鹅emmm商业机密），review原生小程序，以及后期的实操经历，先得出了这些结论：</p>
+<h3 id="开始之前"><a href="#开始之前" class="headerlink" title="开始之前"></a>开始之前</h3><p>先放下发麻的头皮，掏出度娘和谷哥捣腾一番后，发觉论坛上也是各种求方案求思路，最有趣的是，还有专门接这类订制礼品卡小程序的公司。<br>其实看到这里我就放心了，既然有人实现了，那它就是可行的，之后我提供的实现方案，不是很优雅，也不够完美，欢迎有做过这类的同好在评论区中分享自己的思路。<br>本节自定义小程序，我们的目标是<strong>模仿星巴克用星说</strong>，有2套思路：</p>
 <blockquote>
 <ul>
-<li>官方礼品卡无法复用(<code>get_limit</code>无论怎么填都没法领卡)</li>
-<li>用官方的小程序调不出用星说的效果（从<code>banner_url</code>就能看出来）</li>
-<li>礼品卡小程序的流程中有部分功能是没有开放的（选择好友、发送礼品卡类型的消息）</li>
+<li>反编译官方小程序获得源码，在其基础上扩展（TODO）</li>
+<li>完全自定义，官方未提供的功能寻求替代方案</li>
 </ul>
 </blockquote>
-<p>特别是接口开放部分，只要是好友链相关，微信都不会给你开放，更不用说选择好友后返回其昵称与头像了，领卡这部分也是一大问题，查阅相关JS-SDK后，并没有发现可以向用户发送礼品卡信息的方法。</p>
-<h3 id="Key-Point"><a href="#Key-Point" class="headerlink" title="Key Point"></a>Key Point</h3><p>总的来说，要完成一个像样的实现，以下几点是关键：</p>
+<h2 id="反编译实现"><a href="#反编译实现" class="headerlink" title="反编译实现"></a>反编译实现</h2><p>由于当时的工期原因，也考虑到小程序没法过审的风险，没有尝试这一套方案。最近会尝试反编译，看看能否拿到原生礼品卡小程序的源码。（TODO）</p>
+<h2 id="完全自定义实现"><a href="#完全自定义实现" class="headerlink" title="完全自定义实现"></a>完全自定义实现</h2><p>咨询了相关公司（然鹅商业机密=。=），review原生小程序，以及后期的实操经历，我先把这几个无法按原礼品卡小程序流程实现的点放在这里：</p>
+<blockquote>
+<ul>
+<li>官方礼品卡不能复用(会显示为’已领取’状态但无法领卡)</li>
+<li>不能发礼品卡类型的消息给用户</li>
+<li>无法选择好友或群并返回其信息</li>
+</ul>
+</blockquote>
+<p>特别是接口开放部分，只要是好友链相关，微信都不会给你开放，更不用说选择好友后返回其昵称与头像了，领卡这部分也是一大问题，查阅了JS-SDK和小程序文档，并没有发现可以向用户发送礼品卡信息的方法。所以说，<strong>要百分百模仿用星说是不可能的</strong>。</p>
+<h3 id="Key-Point"><a href="#Key-Point" class="headerlink" title="Key Point"></a>Key Point</h3><p>总的来说，要完成一个像样的实现，以下是关键：</p>
 <blockquote>
 <ul>
 <li>找到一种合适的卡券替代礼品卡</li>
@@ -268,6 +281,9 @@
 <li>领卡的替代方案</li>
 </ul>
 </blockquote>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ul>
+<li>会员卡代替礼品卡<br>在上文中有提到过，礼品卡和会员卡是唯二可以放入”卡”中的卡券，那它是否能替代礼品卡，并实现和它几乎相同的逻辑呢？</li>
+</ul>
 
       
 
@@ -391,7 +407,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#官方礼品卡部署"><span class="toc-number">1.</span> <span class="toc-text">官方礼品卡部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#首先注意"><span class="toc-number">1.0.1.</span> <span class="toc-text">首先注意</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接入准备"><span class="toc-number">1.0.2.</span> <span class="toc-text">接入准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#礼品卡创建"><span class="toc-number">1.0.3.</span> <span class="toc-text">礼品卡创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#货架创建"><span class="toc-number">1.0.4.</span> <span class="toc-text">货架创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开通支付"><span class="toc-number">1.0.5.</span> <span class="toc-text">开通支付</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上传生成代码"><span class="toc-number">1.0.6.</span> <span class="toc-text">上传生成代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#退款问题"><span class="toc-number">1.0.7.</span> <span class="toc-text">退款问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优缺点小结"><span class="toc-number">1.0.8.</span> <span class="toc-text">优缺点小结</span></a></li></ol></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#自定义小程序实现"><span class="toc-number">2.</span> <span class="toc-text">自定义小程序实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#开始之前"><span class="toc-number">2.0.1.</span> <span class="toc-text">开始之前</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Key-Point"><span class="toc-number">2.0.2.</span> <span class="toc-text">Key Point</span></a></li></ol></li>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#官方礼品卡部署"><span class="toc-number">1.</span> <span class="toc-text">官方礼品卡部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#首先注意"><span class="toc-number">1.0.1.</span> <span class="toc-text">首先注意</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接入准备"><span class="toc-number">1.0.2.</span> <span class="toc-text">接入准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#礼品卡创建"><span class="toc-number">1.0.3.</span> <span class="toc-text">礼品卡创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#货架创建"><span class="toc-number">1.0.4.</span> <span class="toc-text">货架创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开通支付"><span class="toc-number">1.0.5.</span> <span class="toc-text">开通支付</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上传生成代码"><span class="toc-number">1.0.6.</span> <span class="toc-text">上传生成代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#退款问题"><span class="toc-number">1.0.7.</span> <span class="toc-text">退款问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优缺点小结"><span class="toc-number">1.0.8.</span> <span class="toc-text">优缺点小结</span></a></li></ol></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#自定义小程序实现"><span class="toc-number">2.</span> <span class="toc-text">自定义小程序实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#开始之前"><span class="toc-number">2.0.1.</span> <span class="toc-text">开始之前</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反编译实现"><span class="toc-number">2.1.</span> <span class="toc-text">反编译实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完全自定义实现"><span class="toc-number">2.2.</span> <span class="toc-text">完全自定义实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Key-Point"><span class="toc-number">2.2.1.</span> <span class="toc-text">Key Point</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决方案"><span class="toc-number">2.2.2.</span> <span class="toc-text">解决方案</span></a></li></ol></li>
                     </div>
                 </span>
             </div>
