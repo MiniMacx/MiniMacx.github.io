@@ -47,7 +47,7 @@
 
 
 
-    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="shortcut icon" href="/home/helsing/blog/source/Scared Blinky.ico">
 
 
 
@@ -86,7 +86,7 @@
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
-        search: 
+        search: true
     }
 </script>
 
@@ -110,7 +110,7 @@
 <div class="intrude-less">
     <header id="header" class="inner">
         <a href="/" class="profilepic">
-            <img src="/img/avatar.png" class="animated zoomIn">
+            <img src="/home/helsing/blog/source/19378898.jpeg" class="animated zoomIn">
         </a>
         <hgroup>
           <h1 class="header-author"><a href="/">MiniMacx</a></h1>
@@ -118,6 +118,13 @@
 
         
 
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true">
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class="no-result">No results found <i class="fa fa-spinner fa-pulse"></i></p>
         
 
 
@@ -182,11 +189,9 @@
                     <nav class="header-nav">
                         <ul class="social">
                             
-                                <a class="fa Email" href="mailto:123@123.com" title="Email"></a>
+                                <a class="fa Email" href="mailto:1356348551@qq.com" title="Email"></a>
                             
-                                <a class="fa GitHub" href="#" title="GitHub"></a>
-                            
-                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                                <a class="fa 知乎" href="https://www.zhihu.com/people/ye-yuan-mu-ge/activities" title="知乎"></a>
                             
                         </ul>
                     </nav>
@@ -204,11 +209,11 @@
                 <section class="switch-part switch-part3">
                     <div id="js-friends">
                     
-                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                      <a class="main-nav-link switch-friends-link" href="https://lijizhi.wang">Laiso&#39;s blog</a>
                     
-                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                      <a class="main-nav-link switch-friends-link" href="https://angovia.me/">guaidaokakaxi</a>
                     
-                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                      <a class="main-nav-link switch-friends-link" href="https://julindada.github.io/">julindada</a>
                     
                     </div>
                 </section>
@@ -218,7 +223,7 @@
                 
                 <section class="switch-part switch-part4">
                 
-                    <div id="js-aboutme">专注于前端</div>
+                    <div id="js-aboutme">黑铁级后端</div>
                 </section>
                 
             </div>
@@ -235,7 +240,7 @@
     <div class="intrude-less">
         <header id="header" class="inner">
             <a href="/" class="profilepic">
-                <img src="/img/avatar.png" class="animated zoomIn">
+                <img src="/home/helsing/blog/source/19378898.jpeg" class="animated zoomIn">
             </a>
             <hgroup>
               <h1 class="header-author"><a href="/" title="回到主页">MiniMacx</a></h1>
@@ -258,11 +263,9 @@
             <nav class="header-nav">
                         <ul class="social">
                             
-                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
+                                <a class="fa Email" target="_blank" href="mailto:1356348551@qq.com" title="Email"></a>
                             
-                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
-                            
-                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/people/ye-yuan-mu-ge/activities" title="知乎"></a>
                             
                         </ul>
             </nav>
@@ -469,6 +472,17 @@
 
 
 
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/01/31/404/">
+                    404
+                </a>
+            </div>
+        
+        
+    </nav>
+
   
 </article>
 
@@ -525,13 +539,37 @@
 
 
     
+        <section id="comments">
+    <style> aside.comment-bar { margin: auto 30px; }</style>
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function(){
+            this.page.url = 'http://yoursite.com/2019/01/28/微信礼品卡踩坑之旅/';
+            this.page.identifier = '2019/01/28/微信礼品卡踩坑之旅/';
+        };
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = '//iamhungry-1.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+</section>
+
+
+    
 
 
 
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2019/01/31/404/" title="上一篇: 404">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
@@ -541,7 +579,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/01/28/微信礼品卡踩坑之旅/">微信礼品卡踩坑之旅</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/01/31/404/">404</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/28/微信礼品卡踩坑之旅/">微信礼品卡踩坑之旅</a></li></ul>
 
 
 
@@ -555,7 +593,7 @@
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2016-2019 MiniMacx
+                2019 MiniMacx
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
