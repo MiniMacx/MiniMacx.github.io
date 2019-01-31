@@ -4,19 +4,6 @@
   
     
     <entry>
-      <title>404</title>
-      <link href="/2019/01/31/404/"/>
-      <url>/2019/01/31/404/</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>微信礼品卡踩坑之旅</title>
       <link href="/2019/01/28/%E5%BE%AE%E4%BF%A1%E7%A4%BC%E5%93%81%E5%8D%A1%E8%B8%A9%E5%9D%91%E4%B9%8B%E6%97%85/"/>
       <url>/2019/01/28/%E5%BE%AE%E4%BF%A1%E7%A4%BC%E5%93%81%E5%8D%A1%E8%B8%A9%E5%9D%91%E4%B9%8B%E6%97%85/</url>
@@ -36,6 +23,39 @@
     
   
   
+    
+    
+    <entry>
+      <title>404</title>
+      <link href="//404.html"/>
+      <url>//404.html</url>
+      
+        <content type="html"><![CDATA[<style type="text/css">    .article-header {        padding: 0;        padding-top: 26px;        border-left: none;        text-align: center;    }    .article-header:hover {        border-left: none;    }    .article-title {        font-size: 2.1em;    }    strong a {        color: #747474;    }    .article-meta {        display: none;    }    .share {        display: none;    }    .ds-meta {        display: none;    }    .player {        margin-left: -10px;    }    .sign {        text-align: right;        font-style: italic;    }      #page-visit {        display: none;    }    .center {        text-align: center;        height: 2.5em;        font-weight: bold;    }    .article-entry hr {        margin: 0;    }    .pic {        text-align: center;        margin: 0;    }    .pic br {          display: none;      }    #container .article-info-post.article-info {      display: none;      }    #container .article .article-title {    padding: 0;    }</style>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>about</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
     
   
 </search>
