@@ -23,22 +23,22 @@
 <meta property="og:site_name" content="MiniMacx的妙妙屋">
 <meta property="og:description" content="文中所描述的项目截止于2018-10，因此文章内容具有一定时效性，请大家注意。本文为博主第一篇博客，不足之处还请各位巨佬们指出:D撰写这篇博客初衷有二：记录自己第一个正式项目的开发历程、为需要开通微信礼品卡/实现自定义礼品卡小程序的各位分享一些流程与思路，因此本文总体划为以下部分：   官方礼品卡部署 自定义小程序实现   项目来自于某公司甲方爸爸的两版需求：第一版为开通官方礼品卡小程序，旗下会员">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://plppccgse.bkt.clouddn.com/static/images/membercard.png">
-<meta property="og:image" content="http://plppccgse.bkt.clouddn.com/static/images/old_index.jpg?imageView2/2/w/250">
-<meta property="og:image" content="http://plppccgse.bkt.clouddn.com/static/images/wulian.jpeg">
-<meta property="og:image" content="http://plppccgse.bkt.clouddn.com/static/images/xbk.jpg?imageView2/2/w/250">
-<meta property="og:image" content="http://plppccgse.bkt.clouddn.com/static/images/xbk_index.jpg?imageView2/2/w/250">
-<meta property="og:image" content="http://plppccgse.bkt.clouddn.com/static/images/new_index.jpg?imageView2/2/w/250">
-<meta property="og:image" content="http://plppccgse.bkt.clouddn.com/static/images/singlecargo.jpg?imageView2/2/w/250">
-<meta property="og:image" content="http://plppccgse.bkt.clouddn.com/static/images/send_to.jpg?imageView2/2/w/250">
-<meta property="og:image" content="http://plppccgse.bkt.clouddn.com/static/images/myCard.jpg?imageView2/2/w/250">
-<meta property="og:image" content="http://plppccgse.bkt.clouddn.com/static/images/getCard.jpg?imageView2/2/w/250">
-<meta property="og:image" content="http://plppccgse.bkt.clouddn.com/static/images/getCardPage.jpg?imageView2/2/w/250">
-<meta property="og:updated_time" content="2019-01-28T07:21:31.724Z">
+<meta property="og:image" content="http://pic.iamhungry.cn/static/images/membercard.png">
+<meta property="og:image" content="http://pic.iamhungry.cn/static/images/old_index.jpg?imageView2/2/w/250">
+<meta property="og:image" content="http://pic.iamhungry.cn/static/images/wulian.jpeg">
+<meta property="og:image" content="http://pic.iamhungry.cn/static/images/xbk.jpg?imageView2/2/w/250">
+<meta property="og:image" content="http://pic.iamhungry.cn/static/images/xbk_index.jpg?imageView2/2/w/250">
+<meta property="og:image" content="http://pic.iamhungry.cn/static/images/new_index.jpg?imageView2/2/w/250">
+<meta property="og:image" content="http://pic.iamhungry.cn/static/images/singlecargo.jpg?imageView2/2/w/250">
+<meta property="og:image" content="http://pic.iamhungry.cn/static/images/send_to.jpg?imageView2/2/w/250">
+<meta property="og:image" content="http://pic.iamhungry.cn/static/images/myCard.jpg?imageView2/2/w/250">
+<meta property="og:image" content="http://pic.iamhungry.cn/static/images/getCard.jpg?imageView2/2/w/250">
+<meta property="og:image" content="http://pic.iamhungry.cn/static/images/getCardPage.jpg?imageView2/2/w/250">
+<meta property="og:updated_time" content="2019-02-23T15:32:07.075Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微信礼品卡踩坑之旅">
 <meta name="twitter:description" content="文中所描述的项目截止于2018-10，因此文章内容具有一定时效性，请大家注意。本文为博主第一篇博客，不足之处还请各位巨佬们指出:D撰写这篇博客初衷有二：记录自己第一个正式项目的开发历程、为需要开通微信礼品卡/实现自定义礼品卡小程序的各位分享一些流程与思路，因此本文总体划为以下部分：   官方礼品卡部署 自定义小程序实现   项目来自于某公司甲方爸爸的两版需求：第一版为开通官方礼品卡小程序，旗下会员">
-<meta name="twitter:image" content="http://plppccgse.bkt.clouddn.com/static/images/membercard.png">
+<meta name="twitter:image" content="http://pic.iamhungry.cn/static/images/membercard.png">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -357,7 +357,7 @@
 <ul>
 <li>礼品卡的文档中没有对每个字段做详细图解，不过我们可以参照会员卡逐一对照：</li>
 </ul>
-<img src="http://plppccgse.bkt.clouddn.com/static/images/membercard.png">
+<img src="http://pic.iamhungry.cn/static/images/membercard.png">
 <h3 id="货架创建"><a href="#货架创建" class="headerlink" title="货架创建"></a>货架创建</h3><p>json数据，货架作为礼品卡的载体，可生成多个，但只能上线其中一个，每行标题对应<code>category_list</code>中的元素，每一小块代表<code>theme_list</code>中的一个元素，将创建完成的礼品卡放入<code>theme_list</code>的<code>item_list</code>字段中，其余字段可自调，创建成功后返回的<code>page_id</code>需要保存，后续会用到。货架包含的字段较多，文档中有详细的解释，这里就不展开了。<br><strong>特别注意：</strong>创建货架的接口每天有调用次数限制，约为<strong>10次/天</strong>，调用前建议校验json格式，检查一遍字段的长度限制。 </p>
 <h3 id="开通支付"><a href="#开通支付" class="headerlink" title="开通支付"></a>开通支付</h3><ol>
 <li>调文档8.1中的接口，带上你公众号的商户号即可，调用成功后访问返回结果中的Url，登录商户平台，产品中心-&gt;微信礼品卡，点击开通。</li>
@@ -365,9 +365,9 @@
 </ol>
 <h3 id="上传生成代码"><a href="#上传生成代码" class="headerlink" title="上传生成代码"></a><del>上传</del>生成代码</h3><p>调用8.3接口，带上对应的<code>appid</code>+<code>page_id</code>，等待片刻后即可在小程序后台看到体验版，扫码进去后看到的约莫是这样子：</p>
 <hr>
-<img src="http://plppccgse.bkt.clouddn.com/static/images/old_index.jpg?imageView2/2/w/250">
+<img src="http://pic.iamhungry.cn/static/images/old_index.jpg?imageView2/2/w/250">
 <hr>
-<img src="http://plppccgse.bkt.clouddn.com/static/images/wulian.jpeg">
+<img src="http://pic.iamhungry.cn/static/images/wulian.jpeg">
 <p>emmm…..<br>基本功能算是都有了，只是这样式…啧啧</p>
 <h3 id="退款问题"><a href="#退款问题" class="headerlink" title="退款问题"></a>退款问题</h3><p> 首先国家法律规定，<strong>必须有退款功能</strong>。所以要做，要是礼品卡过期了、失效了，这也是能退款的，除非你设置了长期有效(不要小看，要相信你的用户是个大牛叉)</p>
 <h3 id="优缺点小结"><a href="#优缺点小结" class="headerlink" title="优缺点小结"></a>优缺点小结</h3><blockquote>
@@ -380,9 +380,9 @@
 <p>尽管官方的礼品卡小程序不是很美观，但其他方面还是可以接受的。若要是需求方提到了<strong>星巴克用星说</strong>这玩意并且要给他个差不多样子的，那你就麻烦了。接下来你可能会一阵懵逼，陷入江局——它啥都跟官方的礼品卡小程序一样，但<del>他娘的</del>界面还比你好看，甚至还会有”之前太丑肯定是字段调得不对”的错觉，咱们先看看啥叫别人家的小程序：</p>
 </blockquote>
 <hr>
-<img src="http://plppccgse.bkt.clouddn.com/static/images/xbk.jpg?imageView2/2/w/250">
+<img src="http://pic.iamhungry.cn/static/images/xbk.jpg?imageView2/2/w/250">
 <hr>
-<img src="http://plppccgse.bkt.clouddn.com/static/images/xbk_index.jpg?imageView2/2/w/250">
+<img src="http://pic.iamhungry.cn/static/images/xbk_index.jpg?imageView2/2/w/250">
 <hr>
 <blockquote>
 <ul>
@@ -427,23 +427,23 @@
 <h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="会员卡代替礼品卡"><a href="#会员卡代替礼品卡" class="headerlink" title="会员卡代替礼品卡"></a>会员卡代替礼品卡</h4><p>在上文中有提到过，礼品卡和会员卡是唯二可以放入”卡”中的卡券。会员卡拥有的字段比礼品卡丰富很多，完全可以替换。在事件推送上，会员卡遵循微信卡券的推送格式，而礼品卡有其独特类型的推送事件，比如超过24小时后未领取退回的事件，这可以做成定时任务代替，问题不大。接口方面，虽然会员卡没有核销接口，但也能用失效接口代替，其余也是应有尽有。<br><strong>特别注意</strong>：用户每次购买应新建一张会员卡，即新的<code>card_id</code>，若发放给用户的卡id相同，当用户选择不同卡面时必会用到更新接口，而更新卡面会影响该id下的所有卡，包括其他用户已领取的会员卡，从而导致所有会员卡卡面都会变化。</p>
 <h4 id="使用分享功能指定发送对象"><a href="#使用分享功能指定发送对象" class="headerlink" title="使用分享功能指定发送对象"></a>使用分享功能指定发送对象</h4><p>分享功能是为数不多用户间发送消息的途径，既然小程序内没法指定发送对象，那我们就直接发送分享消息，虽然不够美观，但也能引导用户点开小程序，这也意味着后续的领卡环节将在小程序里完成。</p>
 <h4 id="小程序内调起领卡"><a href="#小程序内调起领卡" class="headerlink" title="小程序内调起领卡"></a>小程序内调起领卡</h4><p>在小程序内做一个领取页，后台先准备好待领取卡的<code>JsApiTicket</code>，前段调用小程序的<a href="https://developers.weixin.qq.com/miniprogram/dev/api/wx.addCard.html" target="_blank" rel="noopener">发卡接口</a>调起官方领卡页面，放入卡包后跳转至领取成功的页面。整个环节最突兀的是官方领卡显示为会员卡且无法更改，这是做的不好的地方。</p>
-<h3 id="成品展示"><a href="#成品展示" class="headerlink" title="成品展示"></a>成品展示</h3><img src="http://plppccgse.bkt.clouddn.com/static/images/new_index.jpg?imageView2/2/w/250">
+<h3 id="成品展示"><a href="#成品展示" class="headerlink" title="成品展示"></a>成品展示</h3><img src="http://pic.iamhungry.cn/static/images/new_index.jpg?imageView2/2/w/250">
 <hr>
-<img src="http://plppccgse.bkt.clouddn.com/static/images/singlecargo.jpg?imageView2/2/w/250">
+<img src="http://pic.iamhungry.cn/static/images/singlecargo.jpg?imageView2/2/w/250">
 <ul>
 <li>按需求做了单品购买</li>
 </ul>
 <hr>
-<img src="http://plppccgse.bkt.clouddn.com/static/images/send_to.jpg?imageView2/2/w/250">
+<img src="http://pic.iamhungry.cn/static/images/send_to.jpg?imageView2/2/w/250">
 <ul>
 <li>增加抢红包模式</li>
 </ul>
 <hr>
-<img src="http://plppccgse.bkt.clouddn.com/static/images/myCard.jpg?imageView2/2/w/250">
+<img src="http://pic.iamhungry.cn/static/images/myCard.jpg?imageView2/2/w/250">
 <hr>
-<img src="http://plppccgse.bkt.clouddn.com/static/images/getCard.jpg?imageView2/2/w/250">
+<img src="http://pic.iamhungry.cn/static/images/getCard.jpg?imageView2/2/w/250">
 <hr>
-<img src="http://plppccgse.bkt.clouddn.com/static/images/getCardPage.jpg?imageView2/2/w/250">
+<img src="http://pic.iamhungry.cn/static/images/getCardPage.jpg?imageView2/2/w/250">
 <hr>
 <blockquote>
 <p>关于样式方面，可以参考liaoruochen的<a href="https://github.com/liaoruochen/Starbucks" target="_blank" rel="noopener">Starbucks</a>，做的很全面，很漂亮。</p>
@@ -463,7 +463,7 @@
         <p><span>本文标题:</span><a href="/2019/01/28/微信礼品卡踩坑之旅/">微信礼品卡踩坑之旅</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">MiniMacx</a></p>
         <p><span>发布时间:</span>2019-01-28, 12:45:41</p>
-        <p><span>最后更新:</span>2019-01-28, 15:21:31</p>
+        <p><span>最后更新:</span>2019-02-23, 23:32:07</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/01/28/微信礼品卡踩坑之旅/" title="微信礼品卡踩坑之旅">http://yoursite.com/2019/01/28/微信礼品卡踩坑之旅/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2019/01/28/微信礼品卡踩坑之旅/　　作者: MiniMacx" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
