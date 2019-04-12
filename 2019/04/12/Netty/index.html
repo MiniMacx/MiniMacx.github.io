@@ -16,7 +16,7 @@
 <meta property="og:description" content="一、 Netty简介1. 是什么？官方对于Netty的介绍：  Netty是由JBOSS提供的一个java开源框架。Netty提供异步的、事件驱动的网络应用程序框架和工具，用以快速开发高性能、高可靠性的网络服务器和客户端程序。  本质来说，它是一个把java nio包封装得很好的网络应用框架，具有以下特点：   高并发，低延迟 高扩展，API使用简单，开发门槛低 非阻塞   基于事件驱动的编程，我">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/gallery/netty/thumbnail.webp">
-<meta property="og:updated_time" content="2019-04-12T05:51:19.515Z">
+<meta property="og:updated_time" content="2019-04-12T07:44:41.280Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Netty 入门笔记">
 <meta name="twitter:description" content="一、 Netty简介1. 是什么？官方对于Netty的介绍：  Netty是由JBOSS提供的一个java开源框架。Netty提供异步的、事件驱动的网络应用程序框架和工具，用以快速开发高性能、高可靠性的网络服务器和客户端程序。  本质来说，它是一个把java nio包封装得很好的网络应用框架，具有以下特点：   高并发，低延迟 高扩展，API使用简单，开发门槛低 非阻塞   基于事件驱动的编程，我">
@@ -161,7 +161,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    22 minutes read (About 3350 words)
+                    24 minutes read (About 3602 words)
                 </span>
                 
                 
@@ -223,7 +223,7 @@
 <h4 id="RocketMQ"><a href="#RocketMQ" class="headerlink" title="RocketMQ"></a>RocketMQ</h4><p>淘宝的消息中间件, 在消息生产者和消息消费者之间，也采用 Netty 进行高性能、异步通信。</p>
 <h4 id="Hadoop"><a href="#Hadoop" class="headerlink" title="Hadoop"></a>Hadoop</h4><p>经典的 Hadoop 的高性能通信和序列化组件 Avro 的 RPC 框架，默认采用 Netty 进行跨节点通信，它的 Netty Service 基于 Netty 框架二次封装实现。</p>
 <h4 id="各种游戏服务器"><a href="#各种游戏服务器" class="headerlink" title="各种游戏服务器"></a>各种游戏服务器</h4><p>使用Java语言的手游服务端和大型网游，大多使用Netty 作为通信组件，它本身提供了 TCP/UDP 和 HTTP 协议栈，非常方便定制和开发私有协议栈。账号登陆服务器、地图服务器之间可以方便的通过 Netty 进行高性能的通信。</p>
-<h2 id="三、Netty-demo"><a href="#三、Netty-demo" class="headerlink" title="三、Netty demo"></a>三、Netty demo</h2><h4 id="一次普通的Socket连接"><a href="#一次普通的Socket连接" class="headerlink" title="一次普通的Socket连接"></a>一次普通的Socket连接</h4><p>建立一个正常的serverSocket：</p>
+<h2 id="三、Netty-demo"><a href="#三、Netty-demo" class="headerlink" title="三、Netty demo"></a>三、Netty demo</h2><h4 id="一次普通的Socket连接"><a href="#一次普通的Socket连接" class="headerlink" title="一次普通的Socket连接"></a>一次普通的Socket连接</h4><p>建立一个正常的serverSocket，各种实现的代码量对比：</p>
 <ul>
 <li>阻塞I/O</li>
 </ul>
@@ -233,9 +233,21 @@
 <figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PlainNioServer</span> </span>&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">serve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> port)</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        ServerSocketChannel serverChannel = ServerSocketChannel.open();</span><br><span class="line">        serverChannel.configureBlocking(<span class="hljs-keyword">false</span>);</span><br><span class="line">        ServerSocket ss = serverChannel.socket();</span><br><span class="line">        InetSocketAddress address = <span class="hljs-keyword">new</span> InetSocketAddress(port);</span><br><span class="line">        ss.bind(address);                             </span><br><span class="line">        Selector selector = Selector.open();         </span><br><span class="line">        serverChannel.register(selector, SelectionKey.OP_ACCEPT);</span><br><span class="line">        <span class="hljs-keyword">final</span> ByteBuffer msg = ByteBuffer.wrap(<span class="hljs-string">"Hi!\r\n"</span>.getBytes());</span><br><span class="line">        <span class="hljs-keyword">for</span> (;;) &#123;</span><br><span class="line">            <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">                selector.select();                   </span><br><span class="line">            &#125; <span class="hljs-keyword">catch</span> (IOException ex) &#123;</span><br><span class="line">                ex.printStackTrace();</span><br><span class="line">                <span class="hljs-comment">// handle exception</span></span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            Set&lt;SelectionKey&gt; readyKeys = selector.selectedKeys(); </span><br><span class="line">            Iterator&lt;SelectionKey&gt; iterator = readyKeys.iterator();</span><br><span class="line">            <span class="hljs-keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">                SelectionKey key = iterator.next();</span><br><span class="line">                iterator.remove();</span><br><span class="line">                <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">                    <span class="hljs-keyword">if</span> (key.isAcceptable()) &#123;         </span><br><span class="line">                        ServerSocketChannel server =</span><br><span class="line">                                (ServerSocketChannel)key.channel();</span><br><span class="line">                        SocketChannel client = server.accept();</span><br><span class="line">                        client.configureBlocking(<span class="hljs-keyword">false</span>);</span><br><span class="line">                        client.register(selector, SelectionKey.OP_WRITE |</span><br><span class="line">                                SelectionKey.OP_READ, msg.duplicate()); </span><br><span class="line">                        System.out.println(</span><br><span class="line">                                <span class="hljs-string">"Accepted connection from "</span> + client);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="hljs-keyword">if</span> (key.isWritable()) &#123;           </span><br><span class="line">                        SocketChannel client =</span><br><span class="line">                                (SocketChannel)key.channel();</span><br><span class="line">                        ByteBuffer buffer =</span><br><span class="line">                                (ByteBuffer)key.attachment();</span><br><span class="line">                        <span class="hljs-keyword">while</span> (buffer.hasRemaining()) &#123;</span><br><span class="line">                            <span class="hljs-keyword">if</span> (client.write(buffer) == <span class="hljs-number">0</span>) &#123; </span><br><span class="line">                                <span class="hljs-keyword">break</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                        client.close();               </span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="hljs-keyword">catch</span> (IOException ex) &#123;</span><br><span class="line">                    key.cancel();</span><br><span class="line">                    <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">                        key.channel().close();</span><br><span class="line">                    &#125; <span class="hljs-keyword">catch</span> (IOException cex) &#123;</span><br><span class="line">                        <span class="hljs-comment">// 在关闭时忽略</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>Netty</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NettyOioServer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">server</span><span class="hljs-params">(<span class="hljs-keyword">int</span> port)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">final</span> ByteBuf buf = Unpooled.unreleasableBuffer(</span><br><span class="line">                Unpooled.copiedBuffer(<span class="hljs-string">"Hi!\r\n"</span>, Charset.forName(<span class="hljs-string">"UTF-8"</span>)));</span><br><span class="line">        EventLoopGroup group = <span class="hljs-keyword">new</span> OioEventLoopGroup();</span><br><span class="line">        <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">            ServerBootstrap b = <span class="hljs-keyword">new</span> ServerBootstrap();        <span class="hljs-comment">//1</span></span><br><span class="line"></span><br><span class="line">            b.group(group)                                    <span class="hljs-comment">//2</span></span><br><span class="line">             .channel(OioServerSocketChannel.class)</span><br><span class="line">             .localAddress(<span class="hljs-keyword">new</span> InetSocketAddress(port))</span><br><span class="line">             .childHandler(<span class="hljs-keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;<span class="hljs-comment">//3</span></span><br><span class="line">                 <span class="hljs-meta">@Override</span></span><br><span class="line">                 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(SocketChannel ch)</span> </span></span><br><span class="line"><span class="hljs-function">                     <span class="hljs-keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                     ch.pipeline().addLast(<span class="hljs-keyword">new</span> ChannelInboundHandlerAdapter() &#123;            <span class="hljs-comment">//4</span></span><br><span class="line">                         <span class="hljs-meta">@Override</span></span><br><span class="line">                         <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelActive</span><span class="hljs-params">(ChannelHandlerContext ctx)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                             ctx.writeAndFlush(buf.duplicate()).addListener(ChannelFutureListener.CLOSE);<span class="hljs-comment">//5</span></span><br><span class="line">                         &#125;</span><br><span class="line">                     &#125;);</span><br><span class="line">                 &#125;</span><br><span class="line">             &#125;);</span><br><span class="line">            ChannelFuture f = b.bind().sync();  <span class="hljs-comment">//6</span></span><br><span class="line">            f.channel().closeFuture().sync();</span><br><span class="line">        &#125; <span class="hljs-keyword">finally</span> &#123;</span><br><span class="line">            group.shutdownGracefully().sync();        <span class="hljs-comment">//7</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NettyOioServer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">server</span><span class="hljs-params">(<span class="hljs-keyword">int</span> port)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">final</span> ByteBuf buf = Unpooled.unreleasableBuffer(</span><br><span class="line">                Unpooled.copiedBuffer(<span class="hljs-string">"Hi!\r\n"</span>, Charset.forName(<span class="hljs-string">"UTF-8"</span>)));</span><br><span class="line">        EventLoopGroup group = <span class="hljs-keyword">new</span> OioEventLoopGroup();</span><br><span class="line">        <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">            ServerBootstrap b = <span class="hljs-keyword">new</span> ServerBootstrap();      </span><br><span class="line"></span><br><span class="line">            b.group(group)                                  </span><br><span class="line">             .channel(OioServerSocketChannel.class)</span><br><span class="line">             .localAddress(<span class="hljs-keyword">new</span> InetSocketAddress(port))</span><br><span class="line">             .childHandler(<span class="hljs-keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;</span><br><span class="line">                 <span class="hljs-meta">@Override</span></span><br><span class="line">                 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(SocketChannel ch)</span> </span></span><br><span class="line"><span class="hljs-function">                     <span class="hljs-keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                     ch.pipeline().addLast(</span><br><span class="line">                         <span class="hljs-comment">//这里写逻辑</span></span><br><span class="line">                         <span class="hljs-keyword">new</span> ChannelInboundHandlerAdapter() &#123;            </span><br><span class="line">                         <span class="hljs-meta">@Override</span></span><br><span class="line">                         <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelActive</span><span class="hljs-params">(ChannelHandlerContext ctx)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                             ctx.writeAndFlush(buf.duplicate()).addListener(ChannelFutureListener.CLOSE);</span><br><span class="line">                         &#125;</span><br><span class="line">                     &#125;);</span><br><span class="line">                 &#125;</span><br><span class="line">             &#125;);</span><br><span class="line">            ChannelFuture f = b.bind().sync();  </span><br><span class="line">            f.channel().closeFuture().sync();</span><br><span class="line">        &#125; <span class="hljs-keyword">finally</span> &#123;</span><br><span class="line">            group.shutdownGracefully().sync(); </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<p>同样是非阻塞IO实现，原生nio使用了太多的api，导致程序复杂度远高于Netty。当然，初看Netty的同学会觉得代码有些臃肿，没关系，后面我们一行一行搞明白，你会发觉真正需要花时间关注的地方只有上面代码的<strong>ChannelInboundHandlerAdapter</strong>处。</p>
+<h4 id="搞一个EchoServer"><a href="#搞一个EchoServer" class="headerlink" title="搞一个EchoServer"></a>搞一个EchoServer</h4><ul>
+<li>EchoServer</li>
+</ul>
+<p>把c端发来的消息原封不动吐回去，这次我们把handler逻辑分离出去，首先搞定EchoServerHandler。</p>
+<p>上代码上代码~:</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EchoServerHandler</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ChannelInboundHandlerAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 负责连接发生读操作时的逻辑</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> ctx</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> msg</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelRead</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg)</span> </span>&#123;</span><br><span class="line">        ByteBuf in = (ByteBuf) msg;</span><br><span class="line">        <span class="hljs-comment">//解析收到的字节流</span></span><br><span class="line">        String content = in.toString(CharsetUtil.UTF_8);</span><br><span class="line">        <span class="hljs-comment">//消息打印到控制台</span></span><br><span class="line">        System.out.println(<span class="hljs-string">"Server received: "</span> + in.toString(CharsetUtil.UTF_8));</span><br><span class="line">        <span class="hljs-comment">//将收到的消息吐回去</span></span><br><span class="line">        ctx.write(in);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 负责读操作的结尾逻辑</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> ctx</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelReadComplete</span><span class="hljs-params">(ChannelHandlerContext ctx)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">//刷新缓冲区完成写操作</span></span><br><span class="line">        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 异常捕获</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> ctx</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> cause</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">exceptionCaught</span><span class="hljs-params">(ChannelHandlerContext ctx, Throwable cause)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// Close the connection when an exception is raised.</span></span><br><span class="line">        cause.printStackTrace();</span><br><span class="line">        ctx.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>handler完毕，我们在主类中注册它：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EchoServer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> PORT = Integer.parseInt(System.getProperty(<span class="hljs-string">"port"</span>, <span class="hljs-string">"8007"</span>));</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// 处理IO操作的事件循环</span></span><br><span class="line">        EventLoopGroup bossGroup = <span class="hljs-keyword">new</span> NioEventLoopGroup(<span class="hljs-number">1</span>); <span class="hljs-comment">//boss负责接受连接,相当于Reactor 模型中处理客户端连接的线程池。</span></span><br><span class="line">        EventLoopGroup workerGroup = <span class="hljs-keyword">new</span> NioEventLoopGroup(); <span class="hljs-comment">//worker处理事件的线程池</span></span><br><span class="line">        <span class="hljs-keyword">final</span> EchoServerHandler serverHandler = <span class="hljs-keyword">new</span> EchoServerHandler();</span><br><span class="line">        <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">            ServerBootstrap b = <span class="hljs-keyword">new</span> ServerBootstrap(); <span class="hljs-comment">//设置服务器的辅助类</span></span><br><span class="line">            b.group(bossGroup, workerGroup)</span><br><span class="line">             .channel(NioServerSocketChannel.class) <span class="hljs-comment">//使用基于NIO实现的channel来接受连接</span></span><br><span class="line">             .option(ChannelOption.SO_BACKLOG, <span class="hljs-number">100</span>) <span class="hljs-comment">//option设置特定的连接选项，这里SO_BACKLOG代表当服务器请求处理线程全满时，</span></span><br><span class="line">                                                          <span class="hljs-comment">// 用于临时存放已完成三次握手的请求的队列的最大长度</span></span><br><span class="line">             .handler(<span class="hljs-keyword">new</span> LoggingHandler(LogLevel.INFO)) <span class="hljs-comment">//父handler，这里设置了日志处理</span></span><br><span class="line">             .childHandler( <span class="hljs-comment">//子handler</span></span><br><span class="line">                     <span class="hljs-keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123; </span><br><span class="line">                         <span class="hljs-comment">//在这里注册自定义的handler</span></span><br><span class="line">                 <span class="hljs-meta">@Override</span></span><br><span class="line">                 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(SocketChannel ch)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                     ChannelPipeline p = ch.pipeline();</span><br><span class="line">                     p.addLast(serverHandler);</span><br><span class="line">                 &#125;</span><br><span class="line">             &#125;);</span><br><span class="line"></span><br><span class="line">            <span class="hljs-comment">// 启动服务端</span></span><br><span class="line">            ChannelFuture f = b.bind(PORT).sync();</span><br><span class="line"></span><br><span class="line">        &#125; <span class="hljs-keyword">finally</span> &#123;</span><br><span class="line">            <span class="hljs-comment">// 关闭时间循环</span></span><br><span class="line">            bossGroup.shutdownGracefully();</span><br><span class="line">            workerGroup.shutdownGracefully();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>跑起来后，我们可以用telnet连一波了：</p>
+<img src="http://pic.iamhungry.cn/static/images/netty-telnet.jpg?imageView2/2/w/650">
+<img src="http://pic.iamhungry.cn/static/images/netty-consoled.jpg?imageView2/2/w/650">
 </li>
 </ul>
 <h4 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h4><p>  java nio的Channel、Buffer、Selector在Netty中做了更高层的抽象。</p>
@@ -269,27 +281,6 @@
 <ul>
 <li>Codec<br>  Netty中的编码/解码器，通过他你能完成字节与pojo、pojo与pojo的相互转换，从而达到自定义协议的目的。</li>
 </ul>
-<h4 id="发一个Http请求"><a href="#发一个Http请求" class="headerlink" title="发一个Http请求"></a>发一个Http请求</h4><p>一次http请求并不是通过一次对话完成的，他中间可能有很多次的连接。每一次对话都会建立一个channel，并且<strong>一个ChannelInboundHandler一般是不会同时去处理多个Channel的</strong>。</p>
-<p>如何在一个Channel里面处理一次完整的Http请求？这就要用到FullHttpRequest，我们只需要在使用netty处理channel的时候，只处理消息是FullHttpRequest的Channel，这样我们就能在一个ChannelHandler中处理一个完整的Http请求了。</p>
-<p>FullHttpRequest/Response是Netty对Http请求做了一次封装，如下图：</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/1089449-5622baa38b81f5d0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/666/format/webp" alt="img"></p>
-<ol>
-<li><p>HTTP Request 第一部分是包含的头信息</p>
-</li>
-<li><p>HttpContent 里面包含的是数据，可以后续有多个 HttpContent 部分</p>
-</li>
-<li><p>LastHttpContent 标记是 HTTP request 的结束，同时可能包含头的尾部信息</p>
-</li>
-<li><p>完整的 HTTP request，由1，2，3组成</p>
-</li>
-</ol>
-<p><img src="https:////upload-images.jianshu.io/upload_images/1089449-3dc45cd81e2e4423.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/664/format/webp" alt="img"></p>
-<ol>
-<li>HTTP response 第一部分是包含的头信息</li>
-<li>HttpContent 里面包含的是数据，可以后续有多个 HttpContent 部分</li>
-<li>LastHttpContent 标记是 HTTP response 的结束，同时可能包含头的尾部信息</li>
-<li>完整的 HTTP response，由1，2，3组成</li>
-</ol>
 <h2 id="四、Netty为何快？"><a href="#四、Netty为何快？" class="headerlink" title="四、Netty为何快？"></a>四、Netty为何快？</h2><h3 id="串行化"><a href="#串行化" class="headerlink" title="串行化"></a>串行化</h3><p><img src="https://user-gold-cdn.xitu.io/2018/7/31/164edca358fcff46?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="img"></p>
 <blockquote>
 <ul>
@@ -299,8 +290,8 @@
 </ul>
 </blockquote>
 <h3 id="零拷贝"><a href="#零拷贝" class="headerlink" title="零拷贝"></a>零拷贝</h3><p>NIO中的另一大特性——零拷贝，当他需要接收数据的时候，他会在堆内存之外开辟一块内存，数据就直接从IO读到了那块内存中去，在netty里面通过ByteBuf可以直接对这些数据进行直接操作，从而加快了传输速度。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1089449-014c9e07d56e4be5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/481/format/webp" alt="普通"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1089449-50e5aa5eec7e86cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/554/format/webp" alt="img"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1089449-014c9e07d56e4be5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/481/format/webp" alt="普通场景"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1089449-50e5aa5eec7e86cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/554/format/webp" alt="零拷贝场景"></p>
 <h2 id="五、Netty学习资料"><a href="#五、Netty学习资料" class="headerlink" title="五、Netty学习资料"></a>五、Netty学习资料</h2><p><a href="https://netty.io/" target="_blank" rel="noopener">Netty官网</a></p>
 <p><a href="https://waylau.gitbooks.io/essential-netty-in-action/content/" target="_blank" rel="noopener">Netty权威指南</a></p>
 <p><a href="https://github.com/netty/netty" target="_blank" rel="noopener">netty-example</a></p>
@@ -344,7 +335,7 @@
 
 <div class="card">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        <h3 class="title is-5 has-text-weight-normal">Commentaires</h3>
         
 <script>
     var disqus_config = function () {
@@ -405,7 +396,7 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        Posts
+                        Articles
                     </p>
                     <p class="title has-text-weight-normal">
                         2
@@ -415,7 +406,7 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        Categories
+                        Catégories
                     </p>
                     <p class="title has-text-weight-normal">
                         0
@@ -435,7 +426,7 @@
         </nav>
         <div class="level">
             <a class="level-item button is-link is-rounded" href="https://github.com/MiniMacx" target="_blank">
-                Follow</a>
+                SUIVRE</a>
         </div>
         
         
@@ -538,13 +529,13 @@
         <span class="has-mr-6">3.1.1</span>
         <span>一次普通的Socket连接</span>
         </a></li><li>
-        <a class="is-flex" href="#相关概念">
+        <a class="is-flex" href="#搞一个EchoServer">
         <span class="has-mr-6">3.1.2</span>
-        <span>相关概念</span>
+        <span>搞一个EchoServer</span>
         </a></li><li>
-        <a class="is-flex" href="#发一个Http请求">
+        <a class="is-flex" href="#相关概念">
         <span class="has-mr-6">3.1.3</span>
-        <span>发一个Http请求</span>
+        <span>相关概念</span>
         </a></li></ul></ul></li><li>
         <a class="is-flex" href="#四、Netty为何快？">
         <span class="has-mr-6">4</span>
@@ -573,7 +564,7 @@
     <div class="card-content">
         <div class="menu">
         <h3 class="menu-label">
-            Links
+            Liens
         </h3>
         <ul class="menu-list">
         
@@ -622,7 +613,7 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                Categories
+                Catégories
             </h3>
             <ul class="menu-list">
             
@@ -635,7 +626,7 @@
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            Tag Cloud
+            Nuage de tags
         </h3>
         <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Netty/" style="font-size: 10px;">Netty</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a>
     </div>
@@ -649,7 +640,7 @@
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            Recent
+            Récents
         </h3>
         
         <article class="media">
@@ -778,7 +769,7 @@
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            Recent
+            Récents
         </h3>
         
         <article class="media">
@@ -1016,7 +1007,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Kembali ke atas" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
@@ -1062,9 +1053,9 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Posts',
+                POSTS: 'Articles',
                 PAGES: 'Pages',
-                CATEGORIES: 'Categories',
+                CATEGORIES: 'Catégories',
                 TAGS: 'Tags',
                 UNTITLED: '(Untitled)',
             },
