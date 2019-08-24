@@ -16,7 +16,7 @@
 <meta property="og:description" content="一、 Netty简介1. 是什么？官方对于Netty的介绍：  Netty是由JBOSS提供的一个java开源框架。Netty提供异步的、事件驱动的网络应用程序框架和工具，用以快速开发高性能、高可靠性的网络服务器和客户端程序。  本质来说，它是一个把java nio包封装得很好的网络应用框架，具有以下特点：   高并发，低延迟 高扩展，API使用简单，开发门槛低 非阻塞   基于事件驱动的编程，我">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/gallery/netty/thumbnail.webp">
-<meta property="og:updated_time" content="2019-08-24T11:36:16.965Z">
+<meta property="og:updated_time" content="2019-08-24T11:45:27.102Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Netty 入门笔记">
 <meta name="twitter:description" content="一、 Netty简介1. 是什么？官方对于Netty的介绍：  Netty是由JBOSS提供的一个java开源框架。Netty提供异步的、事件驱动的网络应用程序框架和工具，用以快速开发高性能、高可靠性的网络服务器和客户端程序。  本质来说，它是一个把java nio包封装得很好的网络应用框架，具有以下特点：   高并发，低延迟 高扩展，API使用简单，开发门槛低 非阻塞   基于事件驱动的编程，我">
@@ -126,12 +126,12 @@
                     
                 
                 
-                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                <a class="navbar-item is-hidden-tablet catalogue" title="Katalog" href="javascript:;">
                     <i class="fas fa-list-ul"></i>
                 </a>
                 
                 
-                <a class="navbar-item search" title="Search" href="javascript:;">
+                <a class="navbar-item search" title="Pencarian" href="javascript:;">
                     <i class="fas fa-search"></i>
                 </a>
                 
@@ -161,7 +161,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    24 minutes read (About 3599 words)
+                    23 minutes membaca (Sekitar 3481 kata)
                 </span>
                 
                 
@@ -191,14 +191,14 @@
 <a id="more"></a>
 <h3 id="2-BIO与NIO"><a href="#2-BIO与NIO" class="headerlink" title="2. BIO与NIO"></a>2. BIO与NIO</h3><p>Netty是一款基于NIO（Nonblocking I/O，非阻塞IO）开发的网络通信框架，对比于BIO（Blocking I/O，阻塞IO），他的并发性能得到了很大提高。</p>
 <p>那么BIO与NIO的差距在哪里呢？</p>
-<p> <img src="https://upload-images.jianshu.io/upload_images/1089449-546a563c9822ce16.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/548/format/webp" alt="阻塞IO的通信方式"></p>
+ <img src="http://pic.iamhungry.cn/static/images/阻塞io通信方式.webp">
 <ol>
 <li>客户端监听（Listen）时，Accept是阻塞的，只有新连接来了，Accept才会返回，主线程才能继续。</li>
 <li>读写socket时，Read是阻塞的，只有请求消息来了，Read才能返回，子线程才能继续处理。</li>
 <li>读写socket时，Write是阻塞的，只有客户端把消息收了，Write才能返回，子线程才能继续读取下一个请求。</li>
 </ol>
 <p>传统的BIO模式下，从头到尾的所有线程都是阻塞的，这些线程就干等着，占用系统的资源，什么事也不干。也就是说，<strong>一个线程只能处理一个连接</strong>。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1089449-9eebe781fba495fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/572/format/webp" alt="非阻塞IO的通信方式"></p>
+<img src="http://pic.iamhungry.cn/static/images/非阻塞io通信方式.webp">
 <p>非阻塞IO会进行持续的轮询（polling）,以查看某个操作是否就绪。</p>
 <p>“非阻塞将大的整片时间的阻塞分成N多的小的阻塞, 所以进程不断地有机会 ‘被’ CPU光顾”。</p>
 <p>Java NIO的非阻塞模式，是通过多路复用IO技术实现的，多路复用的核心就是通过Selector来轮询注册在其上的Channel，当发现某个或者多个Channel处于就绪状态后，从阻塞状态返回就绪的Channel的选择键集合，进行IO操作。如果什么事都没得做，它也不会死循环，它会将线程休眠起来，直到下一个事件来了再继续干活。也就是说，<strong>一个线程就能处理多个连接</strong>。</p>
@@ -253,7 +253,7 @@
 <ul>
 <li>Channel<br> 数据传输流，与channel相关的概念有以下四个：</li>
 </ul>
-<p><img src="https:////upload-images.jianshu.io/upload_images/1089449-afd9e14197e1ef11.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/751/format/webp" alt></p>
+<img src="http://pic.iamhungry.cn/static/images/channel.webp">
 <p>Channel一览</p>
 <blockquote>
 <p>Channel，表示一个连接，可以理解为每一个请求，就是一个Channel。<br><strong>ChannelHandler</strong>，核心处理业务就在这里，用于处理业务请求。<br>ChannelHandlerContext，用于传输业务数据。<br>ChannelPipeline，用于保存处理过程需要用到的ChannelHandler和ChannelHandlerContext。</p>
@@ -261,7 +261,7 @@
 <ul>
 <li>ByteBuf<br> ByteBuf是一个存储字节的容器，最大特点就是<strong>使用方便</strong>，它既有自己的读索引和写索引，方便你对整段字节缓存进行读写，也支持get/set，方便你对其中每一个字节进行读写，他的数据结构如下图所示：</li>
 </ul>
-<p>  <img src="https:////upload-images.jianshu.io/upload_images/1089449-b1ec677f253b692a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/558/format/webp" alt></p>
+  <img src="http://pic.iamhungry.cn/static/images/bytebuf.webp">
 <p>  ByteBuf数据结构</p>
 <p>  他有三种使用模式：</p>
 <ol>
@@ -280,7 +280,7 @@
 <ul>
 <li>Codec<br>  Netty中的编码/解码器，通过他你能完成字节与pojo、pojo与pojo的相互转换，从而达到自定义协议的目的。</li>
 </ul>
-<h2 id="四、Netty为何快？"><a href="#四、Netty为何快？" class="headerlink" title="四、Netty为何快？"></a>四、Netty为何快？</h2><h3 id="串行化"><a href="#串行化" class="headerlink" title="串行化"></a>串行化</h3><img src="http://pic.iamhungry.cn/static/images/阻塞io通信方式.webp?imageView2/2/w/250">
+<h2 id="四、Netty为何快？"><a href="#四、Netty为何快？" class="headerlink" title="四、Netty为何快？"></a>四、Netty为何快？</h2><h3 id="串行化"><a href="#串行化" class="headerlink" title="串行化"></a>串行化</h3><img src="http://pic.iamhungry.cn/static/images/handler链.webp">
 <blockquote>
 <ul>
 <li>串行无锁化设计，在IO线程内部进行串行操作，避免多线程竞争导致的性能下降。</li>
@@ -289,8 +289,8 @@
 </ul>
 </blockquote>
 <h3 id="零拷贝"><a href="#零拷贝" class="headerlink" title="零拷贝"></a>零拷贝</h3><p>NIO中的另一大特性——零拷贝，当他需要接收数据的时候，他会在堆内存之外开辟一块内存，数据就直接从IO读到了那块内存中去，在netty里面通过ByteBuf可以直接对这些数据进行直接操作，从而加快了传输速度。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1089449-014c9e07d56e4be5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/481/format/webp" alt="普通场景"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/1089449-50e5aa5eec7e86cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/554/format/webp" alt="零拷贝场景"></p>
+<img src="http://pic.iamhungry.cn/static/images/普通读写.webp">
+<img src="http://pic.iamhungry.cn/static/images/零拷贝场景.webp">
 <h2 id="五、Netty学习资料"><a href="#五、Netty学习资料" class="headerlink" title="五、Netty学习资料"></a>五、Netty学习资料</h2><p><a href="https://netty.io/" target="_blank" rel="noopener">Netty官网</a></p>
 <p><a href="https://waylau.gitbooks.io/essential-netty-in-action/content/" target="_blank" rel="noopener">Netty权威指南</a></p>
 <p><a href="https://github.com/netty/netty" target="_blank" rel="noopener">netty-example</a></p>
@@ -334,7 +334,7 @@
 
 <div class="card">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        <h3 class="title is-5 has-text-weight-normal">Komentar</h3>
         
 <script>
     var disqus_config = function () {
@@ -395,7 +395,7 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        Posts
+                        Artikel
                     </p>
                     <p class="title has-text-weight-normal">
                         2
@@ -405,7 +405,7 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        Categories
+                        Kategori
                     </p>
                     <p class="title has-text-weight-normal">
                         0
@@ -415,7 +415,7 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        Tags
+                        Tag
                     </p>
                     <p class="title has-text-weight-normal">
                         3
@@ -425,7 +425,7 @@
         </nav>
         <div class="level">
             <a class="level-item button is-link is-rounded" href="https://github.com/MiniMacx" target="_blank">
-                Follow</a>
+                IKUTI</a>
         </div>
         
         
@@ -465,7 +465,7 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                Catalogue
+                Katalog
             </h3>
             <ul class="menu-list"><li>
         <a class="is-flex" href="#一、-Netty简介">
@@ -563,7 +563,7 @@
     <div class="card-content">
         <div class="menu">
         <h3 class="menu-label">
-            Links
+            Tautan
         </h3>
         <ul class="menu-list">
         
@@ -612,7 +612,7 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                Categories
+                Kategori
             </h3>
             <ul class="menu-list">
             
@@ -625,7 +625,7 @@
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            Tag Cloud
+            Awan tag
         </h3>
         <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Netty/" style="font-size: 10px;">Netty</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a>
     </div>
@@ -639,7 +639,7 @@
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            Recent
+            Terbaru
         </h3>
         
         <article class="media">
@@ -688,7 +688,7 @@
     <div class="card-content">
         <div class="menu">
         <h3 class="menu-label">
-            Archives
+            Arsip
         </h3>
         <ul class="menu-list">
         
@@ -723,7 +723,7 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                Tags
+                Tag
             </h3>
             <div class="field is-grouped is-grouped-multiline">
                 
@@ -768,7 +768,7 @@
 <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            Recent
+            Terbaru
         </h3>
         
         <article class="media">
@@ -817,7 +817,7 @@
     <div class="card-content">
         <div class="menu">
         <h3 class="menu-label">
-            Archives
+            Arsip
         </h3>
         <ul class="menu-list">
         
@@ -852,7 +852,7 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                Tags
+                Tag
             </h3>
             <div class="field is-grouped is-grouped-multiline">
                 
@@ -1006,7 +1006,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Kembali ke atas" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
@@ -1040,7 +1040,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="searchbox ins-search">
     <div class="searchbox-container ins-search-container">
         <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Tulis Sesuatu..">
             <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="searchbox-result-wrapper ins-section-wrapper">
@@ -1052,11 +1052,11 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: 'Posts',
-                PAGES: 'Pages',
-                CATEGORIES: 'Categories',
-                TAGS: 'Tags',
-                UNTITLED: '(Untitled)',
+                POSTS: 'Artikel',
+                PAGES: 'Halaman',
+                CATEGORIES: 'Kategori',
+                TAGS: 'Tag',
+                UNTITLED: 'Tanpa Judul',
             },
             CONTENT_URL: '/content.json',
         };
