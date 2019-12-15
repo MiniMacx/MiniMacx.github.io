@@ -7,19 +7,19 @@
 
 
 
-    <meta name="description" content="Servers ​    Master:  192.168.2.221 ​    Worker:  192.168.2.136 ~ 192.168.2.145  Environment ​    CentOS 7  Installation 如果有ntpd，先disable掉 12# systemctl stop ntpd# systemctl disable ntpd       安装chro">
+    <meta name="description" content="Servers ​    Master:  192.168.2.221 ​    Worker:  192.168.2.136 ~ 192.168.2.145  Environment ​    CentOS 7  Installation 如果有ntpd，先disable掉 12# systemctl stop ntpd# systemctl disable ntpd  安装chronyd 1">
 <meta name="keywords" content="Linux,k8s">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用Chrony为k8s集群进行时间同步">
 <meta property="og:url" content="http://yoursite.com/2019/12/15/使用Chrony为k8s集群进行时间同步/index.html">
 <meta property="og:site_name" content="ZYLin的米奇妙妙屋">
-<meta property="og:description" content="Servers ​    Master:  192.168.2.221 ​    Worker:  192.168.2.136 ~ 192.168.2.145  Environment ​    CentOS 7  Installation 如果有ntpd，先disable掉 12# systemctl stop ntpd# systemctl disable ntpd       安装chro">
+<meta property="og:description" content="Servers ​    Master:  192.168.2.221 ​    Worker:  192.168.2.136 ~ 192.168.2.145  Environment ​    CentOS 7  Installation 如果有ntpd，先disable掉 12# systemctl stop ntpd# systemctl disable ntpd  安装chronyd 1">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/gallery/chrony/headimage.jpg">
-<meta property="og:updated_time" content="2019-12-15T11:04:13.030Z">
+<meta property="og:updated_time" content="2019-12-15T11:13:50.164Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Chrony为k8s集群进行时间同步">
-<meta name="twitter:description" content="Servers ​    Master:  192.168.2.221 ​    Worker:  192.168.2.136 ~ 192.168.2.145  Environment ​    CentOS 7  Installation 如果有ntpd，先disable掉 12# systemctl stop ntpd# systemctl disable ntpd       安装chro">
+<meta name="twitter:description" content="Servers ​    Master:  192.168.2.221 ​    Worker:  192.168.2.136 ~ 192.168.2.145  Environment ​    CentOS 7  Installation 如果有ntpd，先disable掉 12# systemctl stop ntpd# systemctl disable ntpd  安装chronyd 1">
 <meta name="twitter:image" content="http://yoursite.com/gallery/chrony/headimage.jpg">
 
 
@@ -186,13 +186,12 @@
 <p>如果有ntpd，先disable掉</p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># systemctl stop ntpd</span><br><span class="line"># systemctl disable ntpd</span><br></pre></td></tr></table></figure>
 
+<p>安装chronyd</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum -y install chrony</span><br></pre></td></tr></table></figure>
+
 
 </li>
 </ul>
-<p>  安装chronyd</p>
-  <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum -y install chrony</span><br></pre></td></tr></table></figure>
-
-
   <a id="more"></a>
 
 <ul>
@@ -226,7 +225,8 @@ driftfile /var/lib/chrony/drift
 <p>worker server 注释原先ntp server,添加master主机的IP即可</p>
 <blockquote>
 <p>#server 0.jp.pool.ntp.org<br>#server 1.jp.pool.ntp.org<br>#server 2.jp.pool.ntp.org<br>#server 3.jp.pool.ntp.org</p>
-<p>server 192.168.2.221</p>
+<p style="background-color: #EE82EE;">server 192.168.2.221</p>
+
 </blockquote>
 </li>
 <li><p>重启chronyd</p>
