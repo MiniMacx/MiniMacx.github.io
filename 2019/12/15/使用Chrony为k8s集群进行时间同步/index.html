@@ -2,25 +2,25 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>ZYLin的米奇妙妙屋</title>
+<title>使用Chrony为k8s集群进行时间同步 - ZYLin的米奇妙妙屋</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="使用Chrony为k8s集群进行时间同步 Servers ​    Master:  192.168.2.221 ​    Worker:  192.168.2.136 ~ 192.168.2.145  Environment ​    CentOS 7  Installation 如果有ntpd，先disable掉： 12# systemctl stop ntpd# systemctl disa">
-<meta name="keywords" content="面经,java,微信">
+    <meta name="description" content="Servers ​    Master:  192.168.2.221 ​    Worker:  192.168.2.136 ~ 192.168.2.145  Environment ​    CentOS 7  Installation 如果有ntpd，先disable掉 12# systemctl stop ntpd# systemctl disable ntpd       安装chro">
+<meta name="keywords" content="Linux,k8s">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ZYLin的米奇妙妙屋">
+<meta property="og:title" content="使用Chrony为k8s集群进行时间同步">
 <meta property="og:url" content="http://yoursite.com/2019/12/15/使用Chrony为k8s集群进行时间同步/index.html">
 <meta property="og:site_name" content="ZYLin的米奇妙妙屋">
-<meta property="og:description" content="使用Chrony为k8s集群进行时间同步 Servers ​    Master:  192.168.2.221 ​    Worker:  192.168.2.136 ~ 192.168.2.145  Environment ​    CentOS 7  Installation 如果有ntpd，先disable掉： 12# systemctl stop ntpd# systemctl disa">
+<meta property="og:description" content="Servers ​    Master:  192.168.2.221 ​    Worker:  192.168.2.136 ~ 192.168.2.145  Environment ​    CentOS 7  Installation 如果有ntpd，先disable掉 12# systemctl stop ntpd# systemctl disable ntpd       安装chro">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-12-15T10:08:36.020Z">
+<meta property="og:image" content="http://yoursite.com/gallery/chrony/headimage.jpg">
+<meta property="og:updated_time" content="2019-12-15T11:04:13.030Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ZYLin的米奇妙妙屋">
-<meta name="twitter:description" content="使用Chrony为k8s集群进行时间同步 Servers ​    Master:  192.168.2.221 ​    Worker:  192.168.2.136 ~ 192.168.2.145  Environment ​    CentOS 7  Installation 如果有ntpd，先disable掉： 12# systemctl stop ntpd# systemctl disa">
-<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+<meta name="twitter:title" content="使用Chrony为k8s集群进行时间同步">
+<meta name="twitter:description" content="Servers ​    Master:  192.168.2.221 ​    Worker:  192.168.2.136 ~ 192.168.2.145  Environment ​    CentOS 7  Installation 如果有ntpd，先disable掉 12# systemctl stop ntpd# systemctl disable ntpd       安装chro">
+<meta name="twitter:image" content="http://yoursite.com/gallery/chrony/headimage.jpg">
 
 
 
@@ -94,7 +94,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/icon.png" alt height="28">
+                <img src="/images/icon.png" alt="使用Chrony为k8s集群进行时间同步" height="28">
             
             </a>
         </div>
@@ -126,6 +126,10 @@
                     
                 
                 
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
                 
                 <a class="navbar-item search" title="Search" href="javascript:;">
                     <i class="fas fa-search"></i>
@@ -141,17 +145,23 @@
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
     
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/gallery/chrony/headimage.jpg" alt="使用Chrony为k8s集群进行时间同步">
+        </span>
+    </div>
+    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-12-15T10:09:44.829Z">2019-12-15</time>
+                <time class="level-item has-text-grey" datetime="2019-12-15T10:56:00.000Z">2019-12-15</time>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    5 minutes read (About 691 words)
+                    5 minutes read (About 677 words)
                 </span>
                 
                 
@@ -160,11 +170,11 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                
+                使用Chrony为k8s集群进行时间同步
             
         </h1>
         <div class="content">
-            <h1 id="使用Chrony为k8s集群进行时间同步"><a href="#使用Chrony为k8s集群进行时间同步" class="headerlink" title="使用Chrony为k8s集群进行时间同步"></a>使用Chrony为k8s集群进行时间同步</h1><ul>
+            <ul>
 <li><p>Servers</p>
 <p>​    Master:  192.168.2.221</p>
 <p>​    Worker:  192.168.2.136 ~ 192.168.2.145</p>
@@ -173,13 +183,18 @@
 <p>​    CentOS 7</p>
 </li>
 <li><p>Installation</p>
-<p>如果有ntpd，先disable掉：</p>
+<p>如果有ntpd，先disable掉</p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># systemctl stop ntpd</span><br><span class="line"># systemctl disable ntpd</span><br></pre></td></tr></table></figure>
 
 
 </li>
 </ul>
-<p>  安装chronyd<br>  <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum -y install chrony</span><br></pre></td></tr></table></figure></p>
+<p>  安装chronyd</p>
+  <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum -y install chrony</span><br></pre></td></tr></table></figure>
+
+
+  <a id="more"></a>
+
 <ul>
 <li><p>Configuration</p>
 <p>编辑/etc/chrony.conf</p>
@@ -255,6 +270,15 @@ driftfile /var/lib/chrony/drift
 </li>
 </ul>
 
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Linux/">Linux</a>, <a class="has-link-grey -link" href="/tags/k8s/">k8s</a>
+                </div>
+            </div>
         </div>
         
         
@@ -368,7 +392,7 @@ driftfile /var/lib/chrony/drift
                         Tags
                     </p>
                     <p class="title has-text-weight-normal">
-                        3
+                        5
                     </p>
                 </div>
             </div>
@@ -411,6 +435,17 @@ driftfile /var/lib/chrony/drift
 </div>
     
         
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Catalogue
+            </h3>
+            
+        </div>
+    </div>
+</div>
+
     
         
 
@@ -482,7 +517,7 @@ driftfile /var/lib/chrony/drift
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Netty/" style="font-size: 10px;">Netty</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a>
+        <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Netty/" style="font-size: 10px;">Netty</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a>
     </div>
 </div>
 
@@ -501,14 +536,14 @@ driftfile /var/lib/chrony/drift
             
             <a href="/2019/12/15/使用Chrony为k8s集群进行时间同步/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt>
+                    <img class="thumbnail" src="/gallery/chrony/headimage.jpg" alt="使用Chrony为k8s集群进行时间同步">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-15T10:09:44.829Z">2019-12-15</time></div>
-                    <a href="/2019/12/15/使用Chrony为k8s集群进行时间同步/" class="has-link-black-ter is-size-6"></a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-15T10:56:00.000Z">2019-12-15</time></div>
+                    <a href="/2019/12/15/使用Chrony为k8s集群进行时间同步/" class="has-link-black-ter is-size-6">使用Chrony为k8s集群进行时间同步</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -620,8 +655,22 @@ driftfile /var/lib/chrony/drift
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Linux/">
+                        <span class="tag">Linux</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/Netty/">
                         <span class="tag">Netty</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/k8s/">
+                        <span class="tag">k8s</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -660,14 +709,14 @@ driftfile /var/lib/chrony/drift
             
             <a href="/2019/12/15/使用Chrony为k8s集群进行时间同步/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt>
+                    <img class="thumbnail" src="/gallery/chrony/headimage.jpg" alt="使用Chrony为k8s集群进行时间同步">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-15T10:09:44.829Z">2019-12-15</time></div>
-                    <a href="/2019/12/15/使用Chrony为k8s集群进行时间同步/" class="has-link-black-ter is-size-6"></a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-15T10:56:00.000Z">2019-12-15</time></div>
+                    <a href="/2019/12/15/使用Chrony为k8s集群进行时间同步/" class="has-link-black-ter is-size-6">使用Chrony为k8s集群进行时间同步</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -779,8 +828,22 @@ driftfile /var/lib/chrony/drift
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Linux/">
+                        <span class="tag">Linux</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/Netty/">
                         <span class="tag">Netty</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/k8s/">
+                        <span class="tag">k8s</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -809,7 +872,7 @@ driftfile /var/lib/chrony/drift
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/icon.png" alt height="28">
+                    <img src="/images/icon.png" alt="使用Chrony为k8s集群进行时间同步" height="28">
                 
                 </a>
                 <p class="is-size-7">

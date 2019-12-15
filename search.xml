@@ -4,13 +4,21 @@
   
     
     <entry>
-      <title></title>
+      <title>使用Chrony为k8s集群进行时间同步</title>
       <link href="/2019/12/15/%E4%BD%BF%E7%94%A8Chrony%E4%B8%BAk8s%E9%9B%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5/"/>
       <url>/2019/12/15/%E4%BD%BF%E7%94%A8Chrony%E4%B8%BAk8s%E9%9B%86%E7%BE%A4%E8%BF%9B%E8%A1%8C%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5/</url>
       
-        <content type="html"><![CDATA[<h1 id="使用Chrony为k8s集群进行时间同步"><a href="#使用Chrony为k8s集群进行时间同步" class="headerlink" title="使用Chrony为k8s集群进行时间同步"></a>使用Chrony为k8s集群进行时间同步</h1><ul><li><p>Servers</p><p>​    Master:  192.168.2.221</p><p>​    Worker:  192.168.2.136 ~ 192.168.2.145</p></li><li><p>Environment</p><p>​    CentOS 7</p></li><li><p>Installation</p><p>如果有ntpd，先disable掉：</p><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># systemctl stop ntpd</span><br><span class="line"># systemctl disable ntpd</span><br></pre></td></tr></table></figure></li></ul><p>  安装chronyd<br>  <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum -y install chrony</span><br></pre></td></tr></table></figure></p><ul><li><p>Configuration</p><p>编辑/etc/chrony.conf</p><ul><li><p>master 配置</p><blockquote><p>#指定NTP Server</p><p style="background-color: #EE82EE;">server 0.jp.pool.ntp.org </p>#根据实际时间计算出服务器增减时间的比率，然后记录到一个文件中，在系统重启后为系统做出最佳时间补偿调整。driftfile /var/lib/chrony/drift<p>#该指令强制chronyd调整时期，大于某个阀值时步进调整系统时钟。<br>makestep 1.0 3</p><p>#将启用一个内核模式，在该模式中，系统时间每11分钟会拷贝到实时时钟（RTC）。<br>rtcsync</p><p>#通过使用hwtimestamp指令启用硬件时间戳<br>#hwtimestamp *</p><p>#Increase the minimum number of selectable sources required to adjust<br>#the system clock.<br>#minsources 2</p><p>#指定一台主机、子网，或者网络以允许或拒绝NTP连接到扮演时钟服务器的机器</p><p style="background-color: #EE82EE;">allow 192.168.2.0/24</p>#即使自己未能通过网络时间服务器同步到时间，也允许将本地时间作为标准时间授时<p style="background-color: #EE82EE;">local stratum 10</p>#指定包含NTP验证密钥的文件。#keyfile /etc/chrony.keys<p>#指定日志文件的目录。<br>logdir /var/log/chrony</p><p>#指定日志目录<br>#log measurements statistics tracking</p></blockquote></li><li><p>worker 配置</p><p>worker server 注释原先ntp server,添加master主机的IP即可</p><blockquote><p>#server 0.jp.pool.ntp.org<br>#server 1.jp.pool.ntp.org<br>#server 2.jp.pool.ntp.org<br>#server 3.jp.pool.ntp.org</p><p>server 192.168.2.221</p></blockquote></li><li><p>重启chronyd</p><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># systemctl restart chronyd.service</span><br><span class="line"># systemctl status chronyd.service</span><br></pre></td></tr></table></figure></li></ul></li></ul><ul><li><p>立即同步</p><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># chronyc -a makestep</span><br></pre></td></tr></table></figure></li></ul><ul><li><p>查看同步源状态 </p><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># chronyc sourcestats</span><br><span class="line"># chronyc sources -v</span><br></pre></td></tr></table></figure></li></ul><ul><li><p>About Chrony</p><p>自 CentOS 7.2 后，chronyd 服务代替原来的 ntpd 服务，性能提高且配置简单。</p><p>根据红帽文档，chronyd 与 ntpd 的区别在于：</p><ul><li>chronyd 使用更好的算法，同步精度、速度与对系统的影响都比 ntpd 更好。</li><li>chronyd 可以在更大的范围内调整系统时间速率，且能在时钟损坏或不稳定的计算机上正常工作。</li><li>当网络故障时，chronyd 仍能很好地工作，而 ntpd 必须定时轮询时间参考才能正常工作。</li><li>chronyd 可以快速适应时钟速率的突然变化，ntpd 则需要一段时间才能稳定。</li><li>chronyd 提供对孤立网络的支持，手动输入校准时间，并通过算法计算实时时间，估计计算机增减时间的速率，从而调整时间。</li></ul></li><li><p>Reference</p><p>​    <a href="https://www.cnblogs.com/JetpropelledSnake/p/10175763.html" target="_blank" rel="noopener">K8S学习笔记之CentOS7集群使用Chrony实现时间同步</a></p><p>​    <a href="https://serchaofan.github.io/2018/01/31/Chrony学习笔记/" target="_blank" rel="noopener">Chrony学习笔记</a></p><p>​    <a href="https://ubuntu.com/blog/ubuntu-bionic-using-chrony-to-configure-ntp" target="_blank" rel="noopener">Ubuntu Bionic: Using chrony to configure NTP</a></p></li></ul>]]></content>
+        <content type="html"><![CDATA[<ul><li><p>Servers</p><p>​    Master:  192.168.2.221</p><p>​    Worker:  192.168.2.136 ~ 192.168.2.145</p></li><li><p>Environment</p><p>​    CentOS 7</p></li><li><p>Installation</p><p>如果有ntpd，先disable掉</p><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># systemctl stop ntpd</span><br><span class="line"># systemctl disable ntpd</span><br></pre></td></tr></table></figure></li></ul><p>  安装chronyd</p>  <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum -y install chrony</span><br></pre></td></tr></table></figure>  <a id="more"></a><ul><li><p>Configuration</p><p>编辑/etc/chrony.conf</p><ul><li><p>master 配置</p><blockquote><p>#指定NTP Server</p><p style="background-color: #EE82EE;">server 0.jp.pool.ntp.org </p>#根据实际时间计算出服务器增减时间的比率，然后记录到一个文件中，在系统重启后为系统做出最佳时间补偿调整。driftfile /var/lib/chrony/drift<p>#该指令强制chronyd调整时期，大于某个阀值时步进调整系统时钟。<br>makestep 1.0 3</p><p>#将启用一个内核模式，在该模式中，系统时间每11分钟会拷贝到实时时钟（RTC）。<br>rtcsync</p><p>#通过使用hwtimestamp指令启用硬件时间戳<br>#hwtimestamp *</p><p>#Increase the minimum number of selectable sources required to adjust<br>#the system clock.<br>#minsources 2</p><p>#指定一台主机、子网，或者网络以允许或拒绝NTP连接到扮演时钟服务器的机器</p><p style="background-color: #EE82EE;">allow 192.168.2.0/24</p>#即使自己未能通过网络时间服务器同步到时间，也允许将本地时间作为标准时间授时<p style="background-color: #EE82EE;">local stratum 10</p>#指定包含NTP验证密钥的文件。#keyfile /etc/chrony.keys<p>#指定日志文件的目录。<br>logdir /var/log/chrony</p><p>#指定日志目录<br>#log measurements statistics tracking</p></blockquote></li><li><p>worker 配置</p><p>worker server 注释原先ntp server,添加master主机的IP即可</p><blockquote><p>#server 0.jp.pool.ntp.org<br>#server 1.jp.pool.ntp.org<br>#server 2.jp.pool.ntp.org<br>#server 3.jp.pool.ntp.org</p><p>server 192.168.2.221</p></blockquote></li><li><p>重启chronyd</p><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># systemctl restart chronyd.service</span><br><span class="line"># systemctl status chronyd.service</span><br></pre></td></tr></table></figure></li></ul></li></ul><ul><li><p>立即同步</p><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># chronyc -a makestep</span><br></pre></td></tr></table></figure></li></ul><ul><li><p>查看同步源状态 </p><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># chronyc sourcestats</span><br><span class="line"># chronyc sources -v</span><br></pre></td></tr></table></figure></li></ul><ul><li><p>About Chrony</p><p>自 CentOS 7.2 后，chronyd 服务代替原来的 ntpd 服务，性能提高且配置简单。</p><p>根据红帽文档，chronyd 与 ntpd 的区别在于：</p><ul><li>chronyd 使用更好的算法，同步精度、速度与对系统的影响都比 ntpd 更好。</li><li>chronyd 可以在更大的范围内调整系统时间速率，且能在时钟损坏或不稳定的计算机上正常工作。</li><li>当网络故障时，chronyd 仍能很好地工作，而 ntpd 必须定时轮询时间参考才能正常工作。</li><li>chronyd 可以快速适应时钟速率的突然变化，ntpd 则需要一段时间才能稳定。</li><li>chronyd 提供对孤立网络的支持，手动输入校准时间，并通过算法计算实时时间，估计计算机增减时间的速率，从而调整时间。</li></ul></li><li><p>Reference</p><p>​    <a href="https://www.cnblogs.com/JetpropelledSnake/p/10175763.html" target="_blank" rel="noopener">K8S学习笔记之CentOS7集群使用Chrony实现时间同步</a></p><p>​    <a href="https://serchaofan.github.io/2018/01/31/Chrony学习笔记/" target="_blank" rel="noopener">Chrony学习笔记</a></p><p>​    <a href="https://ubuntu.com/blog/ubuntu-bionic-using-chrony-to-configure-ntp" target="_blank" rel="noopener">Ubuntu Bionic: Using chrony to configure NTP</a></p></li></ul>]]></content>
       
       
+      
+        <tags>
+            
+            <tag> Linux </tag>
+            
+            <tag> k8s </tag>
+            
+        </tags>
       
     </entry>
     
@@ -60,11 +68,11 @@
     
     
     <entry>
-      <title>about</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <title>404</title>
+      <link href="//404.html"/>
+      <url>//404.html</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<style type="text/css">    .article-header {        padding: 0;        padding-top: 26px;        border-left: none;        text-align: center;    }    .article-header:hover {        border-left: none;    }    .article-title {        font-size: 2.1em;    }    strong a {        color: #747474;    }    .article-meta {        display: none;    }    .share {        display: none;    }    .ds-meta {        display: none;    }    .player {        margin-left: -10px;    }    .sign {        text-align: right;        font-style: italic;    }      #page-visit {        display: none;    }    .center {        text-align: center;        height: 2.5em;        font-weight: bold;    }    .article-entry hr {        margin: 0;    }    .pic {        text-align: center;        margin: 0;    }    .pic br {          display: none;      }    #container .article-info-post.article-info {      display: none;      }    #container .article .article-title {    padding: 0;    }</style>]]></content>
       
     </entry>
     
@@ -82,11 +90,11 @@
     
     
     <entry>
-      <title>404</title>
-      <link href="//404.html"/>
-      <url>//404.html</url>
+      <title>about</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
       
-        <content type="html"><![CDATA[<style type="text/css">    .article-header {        padding: 0;        padding-top: 26px;        border-left: none;        text-align: center;    }    .article-header:hover {        border-left: none;    }    .article-title {        font-size: 2.1em;    }    strong a {        color: #747474;    }    .article-meta {        display: none;    }    .share {        display: none;    }    .ds-meta {        display: none;    }    .player {        margin-left: -10px;    }    .sign {        text-align: right;        font-style: italic;    }      #page-visit {        display: none;    }    .center {        text-align: center;        height: 2.5em;        font-weight: bold;    }    .article-entry hr {        margin: 0;    }    .pic {        text-align: center;        margin: 0;    }    .pic br {          display: none;      }    #container .article-info-post.article-info {      display: none;      }    #container .article .article-title {    padding: 0;    }</style>]]></content>
+        <content type="html"><![CDATA[]]></content>
       
     </entry>
     
